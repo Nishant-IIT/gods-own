@@ -14,6 +14,8 @@ export const scrollState = {
   rawScroll: 0,
   /** 0..1 progress through the full track, including the locked hero intro. */
   progress: 0,
+  /** Elapsed seconds since mount — the prototype's `t`, driving idle motion. */
+  t: 0,
   /** Signed rate of change of the eased camera z, used for star-streak intensity. */
   velocity: 0,
   /** The damped camera-depth value CameraRig is easing toward `camFor(progress)`. */

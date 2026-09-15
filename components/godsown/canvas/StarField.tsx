@@ -1,22 +1,11 @@
 'use client';
 
-/**
- * eslint-disable react-hooks/purity, react-hooks/immutability --
- * the new React Compiler-oriented hook rules assume everything reachable
- * during render must be pure/immutable. This component's `useMemo` builds a
- * one-time random star layout (never meant to change once `count` is fixed)
- * and `useFrame` — which runs entirely outside React's render cycle, once per
- * animation frame — mutates the resulting three.js objects imperatively.
- * That's the standard, correct react-three-fiber pattern (see the library's
- * own docs: "mutate refs in useFrame"), not a purity violation in practice.
- */
-/* eslint-disable react-hooks/purity */
-
 import { useFrame } from '@react-three/fiber';
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { envDensity } from '../lib/env';
 import { scrollState } from '../lib/scrollState';
+import type { StarData } from '../lib/starData';
 
 const VERTEX = /* glsl */ `
   attribute float aSize;
@@ -24,9 +13,13 @@ const VERTEX = /* glsl */ `
   attribute float aSpeed;
   attribute float aWarm;
   uniform float uTime;
+  uniform vec2 uCursor;
+  uniform vec2 uResolution;
+  uniform float uCursorActive;
   varying float vTwinkle;
   varying float vDepth;
   varying float vWarm;
+  varying float vProx;
   void main() {
     vWarm = aWarm;
     vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
@@ -35,8 +28,20 @@ const VERTEX = /* glsl */ `
     vDepth = smoothstep(0.0, 50.0, dist) * (1.0 - smoothstep(2100.0, 2500.0, dist));
     float wobble = 0.5 + 0.5 * sin(aTwinkle + uTime * aSpeed * 1.7);
     vTwinkle = 0.42 + 0.58 * pow(wobble, 1.6) * (0.72 + 0.28 * sin(aTwinkle * 2.3 + uTime * aSpeed * 0.6));
-    gl_Position = projectionMatrix * mvPosition;
-    gl_PointSize = clamp(aSize * (340.0 / dist), 0.6, 6.0);
+    vec4 clip = projectionMatrix * mvPosition;
+    gl_Position = clip;
+
+    // stars brighten as the cursor passes near them
+    float prox = 0.0;
+    if (uCursorActive > 0.5 && clip.w > 0.0) {
+      vec2 ndc = vec2(clip.x, -clip.y) / clip.w;
+      vec2 diffPx = (ndc - uCursor) * uResolution * 0.5;
+      prox = clamp(1.0 - length(diffPx) / 155.0, 0.0, 1.0);
+    }
+    vProx = prox;
+
+    float size = aSize * (340.0 / dist) * (1.0 + prox * 1.2);
+    gl_PointSize = clamp(size, 0.6, 6.0 + prox * 14.0);
   }
 `;
 
@@ -46,56 +51,55 @@ const FRAGMENT = /* glsl */ `
   varying float vTwinkle;
   varying float vDepth;
   varying float vWarm;
+  varying float vProx;
   void main() {
     vec2 c = gl_PointCoord - vec2(0.5);
-    float d = length(c);
-    if (d > 0.5) discard;
-    float edge = smoothstep(0.5, 0.3, d);
+    float d = length(c) * 2.0;
+    if (d > 1.0) discard;
+    float core = smoothstep(1.0, 0.4, d) * vTwinkle * vDepth;
+    float halo = smoothstep(1.0, 0.0, d) * vProx * 0.6;
     vec3 cool = vec3(0.925, 0.902, 0.855);
     vec3 warm = vec3(0.910, 0.784, 0.604);
     vec3 color = mix(cool, warm, vWarm);
-    float alpha = edge * vDepth * vTwinkle * max(0.15, uEnv);
+    color = mix(color, vec3(1.0, 0.97, 0.9), vProx * 0.5);
+    float alpha = max(core, halo) * max(0.15, uEnv);
     gl_FragColor = vec4(color, alpha);
   }
 `;
 
-export function StarField({ count }: { count: number }) {
+export function StarField({ data, cursorEnabled }: { data: StarData; cursorEnabled: boolean }) {
   const material = useRef<THREE.ShaderMaterial>(null);
 
   const geometry = useMemo(() => {
-    const position = new Float32Array(count * 3);
-    const aSize = new Float32Array(count);
-    const aTwinkle = new Float32Array(count);
-    const aSpeed = new Float32Array(count);
-    const aWarm = new Float32Array(count);
-    const rnd = (a: number, b: number) => a + Math.random() * (b - a);
-    for (let i = 0; i < count; i++) {
-      position[i * 3] = rnd(-700, 700);
-      position[i * 3 + 1] = rnd(-450, 450);
-      position[i * 3 + 2] = -rnd(0, 2400);
-      aSize[i] = 0.35 + Math.pow(Math.random(), 2.2) * 1.5;
-      aTwinkle[i] = rnd(0, 6.28);
-      aSpeed[i] = rnd(0.4, 1.4);
-      aWarm[i] = Math.random() < 0.14 ? 1 : 0;
-    }
     const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(position, 3));
-    geo.setAttribute('aSize', new THREE.BufferAttribute(aSize, 1));
-    geo.setAttribute('aTwinkle', new THREE.BufferAttribute(aTwinkle, 1));
-    geo.setAttribute('aSpeed', new THREE.BufferAttribute(aSpeed, 1));
-    geo.setAttribute('aWarm', new THREE.BufferAttribute(aWarm, 1));
+    geo.setAttribute('position', new THREE.BufferAttribute(data.position, 3));
+    geo.setAttribute('aSize', new THREE.BufferAttribute(data.aSize, 1));
+    geo.setAttribute('aTwinkle', new THREE.BufferAttribute(data.aTwinkle, 1));
+    geo.setAttribute('aSpeed', new THREE.BufferAttribute(data.aSpeed, 1));
+    geo.setAttribute('aWarm', new THREE.BufferAttribute(data.aWarm, 1));
     return geo;
-  }, [count]);
+  }, [data]);
 
   const uniforms = useMemo(
-    () => ({ uTime: { value: 0 }, uEnv: { value: 1 } }),
+    () => ({
+      uTime: { value: 0 },
+      uEnv: { value: 1 },
+      uCursor: { value: new THREE.Vector2(0, 0) },
+      uResolution: { value: new THREE.Vector2(1, 1) },
+      uCursorActive: { value: 0 },
+    }),
     [],
   );
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     if (!material.current) return;
-    material.current.uniforms.uTime.value += delta;
-    material.current.uniforms.uEnv.value = envDensity(scrollState.progress);
+    const u = material.current.uniforms;
+    u.uTime.value += delta;
+    u.uEnv.value = envDensity(scrollState.progress);
+    u.uResolution.value.set(state.size.width, state.size.height);
+    const active = cursorEnabled && scrollState.clientX > -50;
+    u.uCursorActive.value = active ? 1 : 0;
+    if (active) u.uCursor.value.set(scrollState.pointerX, scrollState.pointerY);
   });
 
   return (

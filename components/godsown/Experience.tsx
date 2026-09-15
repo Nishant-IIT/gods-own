@@ -3,6 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import { Canvas } from '@react-three/fiber';
 import gsap from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef } from 'react';
 import { Scene } from './canvas/Scene';
@@ -24,8 +25,10 @@ import { PartyOnMyMind } from './overlay/chapters/sound/PartyOnMyMind';
 import { ZiddiDil } from './overlay/chapters/sound/ZiddiDil';
 import { Words } from './overlay/chapters/Words';
 import { LightSwallow } from './overlay/LightSwallow';
+import { PointOfLight } from './overlay/PointOfLight';
+import { ShootingStars } from './overlay/ShootingStars';
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, useGSAP);
 
 export default function Experience() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -94,7 +97,17 @@ export default function Experience() {
     const track = trackRef.current;
     const max = Math.max(1, (track ? track.offsetHeight : document.body.scrollHeight) - window.innerHeight);
     const sp = Math.max(0, (CHAPTERS[i].p - HERO) / (1 - HERO));
-    window.scrollTo({ top: sp * max, behavior: quality.reduced ? 'auto' : 'smooth' });
+    const target = sp * max;
+    if (quality.reduced) {
+      window.scrollTo(0, target);
+      return;
+    }
+    // A fixed, snappy duration rather than the browser's native `smooth`
+    // behavior — for a jump spanning tens of thousands of pixels, native
+    // smooth-scroll takes an impractically long time and moves too gradually
+    // to ever build up real camera velocity, so the warp-speed star streak
+    // (driven by scroll speed, see StarStreaks) never gets to show itself.
+    gsap.to(window, { duration: 1.4, ease: 'power2.inOut', scrollTo: { y: target } });
   }
 
   return (
@@ -109,6 +122,8 @@ export default function Experience() {
         >
           <Scene quality={quality} refs={refs} onActiveChapter={setActiveChapter} />
         </Canvas>
+
+        <ShootingStars reduced={quality.reduced} />
 
         <RefRegistryProvider registry={refs}>
           <Origin />
@@ -126,6 +141,7 @@ export default function Experience() {
         </RefRegistryProvider>
 
         <LightSwallow />
+        <PointOfLight />
       </div>
 
       {/* Optional ambient bed — silent no-op until /public/audio/ambient.mp3 is supplied. */}

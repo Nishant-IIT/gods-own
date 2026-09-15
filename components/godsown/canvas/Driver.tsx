@@ -36,6 +36,7 @@ export function Driver({
   useFrame((state, delta) => {
     const dt = Math.min(50, delta * 1000) / 16.67;
     t.current += dt / 60;
+    scrollState.t = t.current;
 
     let p: number;
     if (!scrollState.introDone) {
