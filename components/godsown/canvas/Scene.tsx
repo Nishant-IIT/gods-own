@@ -4,7 +4,6 @@ import { useMemo, type MutableRefObject } from 'react';
 import { Driver } from './Driver';
 import { Dust } from './Dust';
 import { Milestones } from './Milestones';
-import { Nebula } from './Nebula';
 import { PostFX } from './PostFX';
 import { StarField } from './StarField';
 import { StarStreaks } from './StarStreaks';
@@ -33,7 +32,6 @@ export function Scene({
       <StarField data={stars} cursorEnabled={!quality.mobile} />
       <StarStreaks data={stars} />
       <Dust count={quality.dustCount} />
-      <Nebula />
       <Milestones />
       <PostFX bloom={quality.bloom} />
     </>
