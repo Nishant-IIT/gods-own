@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'GODSOWN — Prashant Ingole',
+  title: "GOD'S OWN MOTION PICTURES",
   description:
-    'GODSOWN — the creative universe of Prashant Ingole: lyricist, songwriter, composer, writer, and filmmaker.',
+    "GOD'S OWN MOTION PICTURES — an independent entertainment studio developing stories, content and original IP for audiences in India and around the world.",
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
