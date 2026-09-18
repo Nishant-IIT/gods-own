@@ -1,7 +1,8 @@
 'use client';
 
-import { BackBar } from '../BackBar';
+import Link from 'next/link';
 import { PageShell } from '../PageShell';
+import { ReachMap } from '../ReachMap';
 import { Reveal } from '../Reveal';
 
 const MAIL = 'hello@godsownmotionpictures.com';
@@ -20,7 +21,7 @@ const DOORS = [
 
 export function ContactPage() {
   return (
-    <PageShell>
+    <PageShell footer={<ContactFooter />}>
       <section style={{ minHeight: '64vh', display: 'flex', alignItems: 'flex-end', padding: 'clamp(120px,20vh,200px) clamp(20px,5vw,80px) clamp(40px,7vh,80px)' }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(24px,4vh,42px)' }}>
           <Reveal style={{ fontSize: 'clamp(9px,.72vw,10px)', letterSpacing: '.46em', textIndent: '.46em', color: '#d4a05a' }}>
@@ -89,9 +90,66 @@ export function ContactPage() {
           <p style={{ margin: 0, fontFamily: 'ui-monospace,Menlo,monospace', fontSize: 10, letterSpacing: '.16em', color: '#8f887c' }}>
             PLACEHOLDER CONTACT DETAILS — TO BE REPLACED
           </p>
-          <BackBar />
         </div>
       </section>
     </PageShell>
+  );
+}
+
+/**
+ * Ported from the `<footer>` embedded directly in Contact.dc.html — unlike
+ * every other page, Contact doesn't import the shared Footer; it gets its
+ * own reach map instead of the shared wordmark.
+ */
+function ContactFooter() {
+  return (
+    <footer style={{ position: 'relative', zIndex: 1, marginTop: 'clamp(30px,6vh,70px)', background: '#000', boxShadow: 'inset 0 1px 0 rgba(236,230,218,.1)' }}>
+      <div
+        style={{
+          maxWidth: 1320,
+          margin: '0 auto',
+          padding: 'clamp(56px,9vh,96px) clamp(20px,5vw,80px) clamp(18px,3vh,30px)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'clamp(20px,3.4vh,36px)',
+        }}
+      >
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 20 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <span style={{ fontSize: 'clamp(9px,.72vw,10px)', letterSpacing: '.46em', textIndent: '.46em', color: '#d4a05a' }}>REACH</span>
+            <h2 style={{ margin: 0, maxWidth: '20ch', fontFamily: "'Oswald',sans-serif", fontWeight: 200, fontSize: 'clamp(23px,3.8vw,58px)', lineHeight: 1.07, letterSpacing: '.04em', color: '#ece6da', textWrap: 'balance' }}>
+              BORN IN INDIA. BUILT FOR AUDIENCES EVERYWHERE.
+            </h2>
+          </div>
+          <p style={{ margin: 0, maxWidth: '34ch', fontSize: 'clamp(12px,1.02vw,15px)', lineHeight: 1.75, color: '#b3ab9d', textWrap: 'pretty' }}>
+            Working from Mumbai, with stories built to travel through genre, emotion, music and characters.
+          </p>
+        </div>
+
+        <ReachMap />
+
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 18,
+            paddingTop: 'clamp(16px,2.6vh,26px)',
+            borderTop: '1px solid rgba(236,230,218,.1)',
+          }}
+        >
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(14px,2.4vw,30px)' }}>
+            <Link href="/" className="gs-hover-accent" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 9, letterSpacing: '.3em', color: '#8f887c' }}>
+              GOD&apos;S OWN MOTION PICTURES
+            </Link>
+            <a href={`mailto:${MAIL}`} className="gs-hover-accent" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 9, letterSpacing: '.3em', color: '#8f887c' }}>
+              EMAIL
+            </a>
+          </div>
+          <span style={{ fontSize: 9, letterSpacing: '.3em', color: '#8f887c' }}>MUMBAI, INDIA</span>
+        </div>
+      </div>
+    </footer>
   );
 }

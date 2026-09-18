@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { BackBar } from '../BackBar';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
@@ -203,7 +202,6 @@ export function StudioPage() {
               </Link>
             </div>
           </Reveal>
-          <BackBar />
         </div>
       </section>
     </PageShell>
