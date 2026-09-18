@@ -1,10 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import { BackBar } from '../BackBar';
+import { GalleryHero } from '../GalleryHero';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
+import { LogoCloud } from '../LogoCloud';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
+import { VideoFrame } from '../VideoFrame';
+
+const HERO_STILLS = ['BAJIRAO MASTANI — 2015', 'MARY KOM — 2014', 'RACE 2 — 2013', '83 — 2021', 'JALEBI — 2018'].map((label) => ({
+  label,
+  ph: `${label.split(' — ')[0]} — still`,
+}));
 
 const CREDITS = [
   { title: 'MALHARI', film: 'BAJIRAO MASTANI', year: '2015' },
@@ -29,26 +36,13 @@ const eyebrowMuted = { fontSize: 'clamp(9px,.72vw,10px)', letterSpacing: '.46em'
 export function WorkPage() {
   return (
     <PageShell>
-      <section style={{ minHeight: '76vh', display: 'flex', alignItems: 'flex-end', padding: 'clamp(120px,20vh,200px) clamp(20px,5vw,80px) clamp(50px,9vh,100px)' }}>
-        <div style={{ maxWidth: 1180, margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(24px,4vh,42px)' }}>
-          <Reveal style={{ fontSize: 'clamp(9px,.72vw,10px)', letterSpacing: '.46em', textIndent: '.46em', color: '#d4a05a' }}>
-            PROOF
-          </Reveal>
-          <Reveal
-            as="h1"
-            delay={60}
-            style={{ margin: 0, fontFamily: "'Oswald',sans-serif", fontWeight: 200, fontSize: 'clamp(34px,7.4vw,124px)', lineHeight: 1, letterSpacing: '.09em', textIndent: '.09em', color: '#ece6da' }}
-          >
-            SELECTED WORK
-          </Reveal>
-          <Reveal delay={120} style={{ maxWidth: '52ch' }}>
-            <p style={{ margin: 0, fontSize: 'clamp(13px,1.15vw,17px)', lineHeight: 1.7, color: '#b3ab9d' }}>
-              What the studio has done, as distinct from what it is building. Songs written for Hindi cinema across a
-              decade of releases.
-            </p>
-          </Reveal>
-        </div>
-      </section>
+      <GalleryHero
+        eyebrow="PROOF"
+        title="SELECTED WORK"
+        sub="What the studio has done, as distinct from what it is building. Songs written for Hindi cinema across a decade of releases."
+        hint="SCROLL"
+        items={HERO_STILLS}
+      />
 
       <section style={{ padding: sectionPad }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,300px),1fr))', gap: 'clamp(28px,5vw,76px)' }}>
@@ -91,7 +85,17 @@ export function WorkPage() {
             {CREDITS.map((c) => (
               <Reveal
                 key={c.title}
-                style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', justifyContent: 'space-between', gap: 'clamp(12px,3vw,40px)', padding: 'clamp(18px,2.8vh,30px) 0', borderTop: '1px solid rgba(236,230,218,.1)' }}
+                className="gs-hover-indent"
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  alignItems: 'baseline',
+                  justifyContent: 'space-between',
+                  gap: 'clamp(12px,3vw,40px)',
+                  padding: 'clamp(18px,2.8vh,30px) 0',
+                  borderTop: '1px solid rgba(236,230,218,.1)',
+                  transition: 'padding-left .5s cubic-bezier(.16,1,.3,1)',
+                }}
               >
                 <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(21px,3vw,48px)', lineHeight: 1.02, letterSpacing: '.04em', color: '#ece6da' }}>
                   {c.title}
@@ -148,6 +152,26 @@ export function WorkPage() {
         </div>
       </section>
 
+      <section style={{ padding: 'clamp(40px,8vh,110px) clamp(20px,5vw,80px)' }}>
+        <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(24px,4vh,44px)' }}>
+          <Reveal style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <span style={{ fontSize: 'clamp(9px,.72vw,10px)', letterSpacing: '.46em', textIndent: '.46em', color: '#d4a05a' }}>BEHIND THE CAMERA</span>
+            <h2 style={{ margin: 0, fontFamily: "'Oswald',sans-serif", fontWeight: 200, fontSize: 'clamp(23px,3.6vw,54px)', lineHeight: 1.08, letterSpacing: '.05em', color: '#ece6da' }}>
+              BUDH (AWAKENING)
+            </h2>
+          </Reveal>
+          <Reveal>
+            <VideoFrame label="BUDH (AWAKENING)" meta="SHORT FILM · WRITER & DIRECTOR" ratio="21/9" placeholder="BUDH (AWAKENING) — poster frame" note="FILM COMING SOON" />
+          </Reveal>
+          <Reveal delay={90}>
+            <p style={{ margin: 0, maxWidth: '56ch', fontSize: 'clamp(13px,1.1vw,16px)', lineHeight: 1.75, color: '#b3ab9d', textWrap: 'pretty' }}>
+              A short film on women&apos;s empowerment — an opportunity to use cinema not just as entertainment, but as a
+              voice: to question, to provoke thought, and hopefully to inspire change.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       <section style={{ padding: sectionPad }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(30px,5vh,52px)' }}>
           <div style={eyebrowMuted}>ALSO WORKING ACROSS</div>
@@ -156,7 +180,15 @@ export function WorkPage() {
               <Reveal
                 key={c.title}
                 delay={i * 70}
-                style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 'clamp(20px,2.8vw,34px)', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.1)' }}
+                className="gs-hover-card gs-hover-lift"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 12,
+                  padding: 'clamp(20px,2.8vw,34px)',
+                  boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.1)',
+                  transition: 'transform .55s cubic-bezier(.16,1,.3,1), box-shadow .55s ease',
+                }}
               >
                 <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(17px,1.9vw,26px)', letterSpacing: '.1em', color: '#ece6da' }}>
                   {c.title}
@@ -169,6 +201,12 @@ export function WorkPage() {
             FULL CREDITS AND CASE STUDIES TO BE ADDED
           </p>
         </div>
+      </section>
+
+      <section style={{ padding: 'clamp(50px,9vh,120px) clamp(20px,5vw,80px)' }}>
+        <Reveal style={{ maxWidth: 1180, margin: '0 auto' }}>
+          <LogoCloud />
+        </Reveal>
       </section>
 
       <section style={{ padding: 'clamp(60px,11vh,130px) clamp(20px,5vw,80px) clamp(50px,8vh,90px)' }}>
@@ -195,7 +233,6 @@ export function WorkPage() {
               START A CONVERSATION
             </a>
           </Reveal>
-          <BackBar />
         </div>
       </section>
     </PageShell>

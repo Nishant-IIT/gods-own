@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { BackBar } from '../BackBar';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
 
@@ -155,7 +154,6 @@ export function IPPage() {
               VIEW THE SLATE
             </Link>
           </Reveal>
-          <BackBar />
         </div>
       </section>
     </PageShell>

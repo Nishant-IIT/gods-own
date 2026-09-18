@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { BackBar } from '../BackBar';
 import type { SlateProject } from '../data/slateProjects';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 import { PageShell } from '../PageShell';
@@ -110,7 +109,6 @@ export function SlateDetailPage({ project }: { project: SlateProject }) {
           <p style={{ margin: 0, fontFamily: 'ui-monospace,Menlo,monospace', fontSize: 10, letterSpacing: '.16em', color: '#8f887c' }}>
             PLACEHOLDER PROJECT — LOGLINE, WORLD AND STAGE ARE ILLUSTRATIVE
           </p>
-          <BackBar />
         </div>
       </section>
     </PageShell>

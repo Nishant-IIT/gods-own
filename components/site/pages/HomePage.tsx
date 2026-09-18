@@ -666,31 +666,8 @@ export function HomePage() {
               </Reveal>
             ))}
           </div>
-          <BackBarHome />
         </div>
       </section>
     </PageShell>
-  );
-}
-
-function BackBarHome() {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'baseline',
-        justifyContent: 'space-between',
-        gap: 20,
-        paddingTop: 'clamp(22px,4vh,40px)',
-        borderTop: '1px solid rgba(236,230,218,.1)',
-        fontSize: 9,
-        letterSpacing: '.3em',
-        color: '#8f887c',
-      }}
-    >
-      <span>GOD&apos;S OWN MOTION PICTURES</span>
-      <span>MUMBAI, INDIA</span>
-    </div>
   );
 }
