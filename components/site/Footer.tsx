@@ -189,8 +189,12 @@ export function Footer() {
         position: 'relative',
         zIndex: 1,
         width: '100%',
-        height: 'clamp(320px,48vh,620px)',
-        marginTop: 'clamp(40px,7vh,90px)',
+        // The revealed pane is anchored to the bottom of the viewport, so this height is
+        // the reveal window: anything taller than the pane's own content shows as dead
+        // black above the social row. That content is sized off the wordmark, which is
+        // vw-driven — hence a vw-driven height here, not the vh one it used to be.
+        height: 'clamp(230px,calc(22vw + 140px),900px)',
+        marginTop: 'clamp(24px,4vh,64px)',
         clipPath: 'polygon(0 0,100% 0,100% 100%,0 100%)',
       }}
     >
@@ -226,7 +230,7 @@ export function Footer() {
               maxWidth: 1320,
               margin: '0 auto',
               width: '100%',
-              padding: 'clamp(96px,12vh,140px) clamp(20px,5vw,80px) clamp(18px,3vh,30px)',
+              padding: 'clamp(40px,6vh,72px) clamp(20px,5vw,80px) clamp(18px,3vh,30px)',
               boxSizing: 'border-box',
               display: 'flex',
               flexDirection: 'column',
