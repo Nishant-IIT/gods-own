@@ -8,8 +8,12 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
+  // suppressHydrationWarning: a remote-access/screen-share browser extension
+  // stamps a token attribute onto <html> before React hydrates; the server
+  // never emits it. Shallow — it covers this element's own attributes only,
+  // not the tree below, so real mismatches inside the app still surface.
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
