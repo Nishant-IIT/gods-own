@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { GalleryHero } from '../GalleryHero';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
-import { LogoCloud } from '../LogoCloud';
+import { LogoCloud } from '@/components/ui/logo-clouds';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
 import { VideoFrame } from '../VideoFrame';
