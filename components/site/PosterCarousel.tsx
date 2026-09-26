@@ -227,7 +227,7 @@ export function PosterCarousel({ items, radius = 560, autoRotate = 0.035 }: Prop
       style={{
         position: 'relative',
         width: '100%',
-        height: 'clamp(340px,58vh,560px)',
+        height: 'clamp(300px,44vw,560px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
