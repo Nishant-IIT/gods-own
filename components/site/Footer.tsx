@@ -357,10 +357,10 @@ export function Footer() {
             <div
               style={{
                 textAlign: 'center',
-                marginTop: 'clamp(-70px,-5.7vh,-40px)',
+                marginTop: 'clamp(-80px,-3.22vw,-10px)',
                 fontFamily: "'Oswald',sans-serif",
                 fontWeight: 200,
-                fontSize: 'clamp(22px,3.53vw,61px)',
+                fontSize: '3.53vw',
                 lineHeight: 'normal',
                 letterSpacing: '.5em',
                 color: '#8f887c',
