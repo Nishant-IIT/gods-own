@@ -189,7 +189,7 @@ export function Footer() {
         position: 'relative',
         zIndex: 1,
         width: '100%',
-        height: 'clamp(460px,64vh,620px)',
+        height: 'clamp(320px,48vh,620px)',
         marginTop: 'clamp(40px,7vh,90px)',
         clipPath: 'polygon(0 0,100% 0,100% 100%,0 100%)',
       }}
