@@ -7,53 +7,6 @@ import { Reveal } from '../Reveal';
 
 const PRASHANT_TAGS = ['BAJIRAO MASTANI', 'MARY KOM', 'RACE 2', '83', 'JALEBI'];
 
-const ABHIJEET_STATS = [
-  { figure: '7+', label: 'YEARS IN FILMMAKING AND CONTENT PRODUCTION' },
-  { figure: '60+', label: 'CORPORATE FILMS' },
-  { figure: '100+', label: 'FASHION FILMS AND VIDEOS' },
-  { figure: '11', label: 'MUSIC VIDEOS' },
-  { figure: '25', label: 'COVER SONGS' },
-  { figure: '9.5M', label: 'VIEWS ON THE INDUS VALLEY TALK SHOW' },
-];
-
-const ABHIJEET_CREDITS = [
-  {
-    label: 'AD FILMS — DIRECTOR',
-    body: 'IDFC FIRST BANK · RELISPRAY · GENSOL · RIMZIM (COCA-COLA) · BANSAL FOODS · TRUECALLER · STOREROOM · INSTAASTRO · SKY247 · AIRMEET · WNS · UPSTOX · DELTIN · KINLEY · PURA SURE · INDUS VALLEY · 3D PROJECT FOR VISAKHAPATNAM GOV',
-  },
-  {
-    label: 'SHOWRUNNER / CREATIVE DIRECTOR / POST PRODUCER',
-    body: 'EBAY · TATA MUTUAL FUND · BIBA · STOREKING · IDEE · RUPASHREE · NEO PAINTS · ZARA · BRIDGESTONE, and many more',
-  },
-  {
-    label: 'TALK SHOW / PODCAST',
-    body: 'Digital 12-episode talk show for Indus Valley with TV celebrities — almost 9.5 million views on YouTube',
-  },
-  {
-    label: 'MUSIC VIDEOS',
-    body: 'MERA YAAR BADAL GAYA (Zee Music Company) · SAADGI — 10 million views, 205k likes, 10.5k comments · CHEEKH · THAAM LENA · INTEZAAR · PEHLE KYU NA MILA · KHAYALO KE KIRDAAR · three further videos yet to be released',
-  },
-  {
-    label: 'FEATURE & LONG FORM',
-    body: 'BARAAT — upcoming digital feature film, Director · STARTING TROUBLES — web series, Creative Supervisor, Editor and Post Producer · three independent feature films',
-  },
-  { label: 'SHORT FILMS', body: 'Five short films, several appreciated worldwide' },
-  {
-    label: 'REAL ESTATE',
-    body: 'PRIDE GROUP · KOLTE PATIL · AIRMEET · DGS · 3D PROJECT FOR VISAKHAPATNAM GOV · ALPINE WOODS · VARDHAN GROUP and others',
-  },
-  {
-    label: 'CORPORATE',
-    body: 'More than 60 corporate films for TRIDENT INDIA · RETIER INDIA · ALL TIME PLASTIC · SUZLON · LOREAL INDIA and many more',
-  },
-];
-
-const LEADS = [
-  { name: 'NAME TO COME', role: 'HEAD OF DEVELOPMENT', body: 'Runs the script pipeline from first idea to greenlight-ready draft.' },
-  { name: 'NAME TO COME', role: 'HEAD OF PRODUCTION', body: 'Owns schedule, budget and delivery across film, series and music.' },
-  { name: 'NAME TO COME', role: 'HEAD OF BUSINESS', body: 'Partnerships, distribution and the commercial life of each property.' },
-];
-
 const NETWORK = [
   { title: 'Established Artists', body: 'Composers, singers and performers with audiences of their own.' },
   { title: 'Emerging Creators', body: 'First-time voices given a real budget and a real release.' },
@@ -84,7 +37,7 @@ const bioGridStyle = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit,mi
 export function PeoplePage() {
   return (
     <PageShell>
-      <section style={{ minHeight: '66vh', display: 'flex', alignItems: 'flex-end', padding: 'clamp(120px,20vh,200px) clamp(20px,5vw,80px) clamp(40px,7vh,80px)' }}>
+      <section style={{ minHeight: '42vh', display: 'flex', alignItems: 'flex-end', padding: 'clamp(90px,10vh,110px) clamp(20px,5vw,80px) clamp(40px,7vh,80px)' }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(24px,4vh,42px)' }}>
           <Reveal style={{ fontSize: 'clamp(9px,.72vw,10px)', letterSpacing: '.46em', textIndent: '.46em', color: '#d4a05a' }}>
             PEOPLE
@@ -232,68 +185,6 @@ export function PeoplePage() {
               </p>
             </div>
           </Reveal>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,150px),1fr))',
-              gap: 'clamp(18px,2.6vw,40px)',
-              paddingTop: 'clamp(20px,3.4vh,32px)',
-              borderTop: '1px solid rgba(236,230,218,.12)',
-            }}
-          >
-            {ABHIJEET_STATS.map((s, i) => (
-              <Reveal key={s.label} delay={i * 70} style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-                <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 200, fontSize: 'clamp(26px,3.4vw,50px)', lineHeight: 1, color: '#ece6da' }}>
-                  {s.figure}
-                </span>
-                <span style={{ fontSize: 'clamp(10px,.82vw,12px)', lineHeight: 1.6, letterSpacing: '.12em', color: '#8f887c' }}>{s.label}</span>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(20px,3.4vh,34px)' }}>
-            <span style={eyebrowMuted}>SELECTED CREDITS</span>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {ABHIJEET_CREDITS.map((c) => (
-                <div
-                  key={c.label}
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,190px),1fr))',
-                    gap: 'clamp(10px,2.4vw,44px)',
-                    padding: 'clamp(16px,2.6vh,26px) 0',
-                    borderTop: '1px solid rgba(236,230,218,.09)',
-                  }}
-                >
-                  <span style={{ fontSize: 'clamp(9px,.76vw,11px)', letterSpacing: '.32em', color: '#d4a05a' }}>{c.label}</span>
-                  <span style={{ gridColumn: 'span 2', fontSize: 'clamp(11px,.98vw,14px)', lineHeight: 1.85, letterSpacing: '.04em', color: '#b3ab9d', textWrap: 'pretty' }}>
-                    {c.body}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section style={{ padding: sectionPad }}>
-        <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(26px,4.4vh,44px)' }}>
-          <div style={eyebrowMuted}>ALSO BUILDING THE STUDIO</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,230px),1fr))', gap: 'clamp(14px,2vw,26px)' }}>
-            {LEADS.map((l, i) => (
-              <Reveal key={l.role} delay={i * 70} style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 'clamp(20px,2.8vw,34px)', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.1)' }}>
-                <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(16px,1.8vw,24px)', letterSpacing: '.05em', color: '#ece6da' }}>
-                  {l.name}
-                </span>
-                <span style={{ fontSize: 9, letterSpacing: '.3em', color: '#d4a05a' }}>{l.role}</span>
-                <span style={{ fontSize: 'clamp(11px,.95vw,13px)', lineHeight: 1.7, color: '#b3ab9d' }}>{l.body}</span>
-              </Reveal>
-            ))}
-          </div>
-          <p style={{ margin: 0, fontFamily: 'ui-monospace,Menlo,monospace', fontSize: 10, letterSpacing: '.16em', color: '#8f887c' }}>
-            PLACEHOLDER ROLES — NAMES TO BE CONFIRMED
-          </p>
         </div>
       </section>
 
