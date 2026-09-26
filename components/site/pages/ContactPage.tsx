@@ -83,7 +83,7 @@ export function ContactPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 <span style={{ fontSize: 9, letterSpacing: '.36em', color: '#8f887c' }}>VISIT</span>
                 <p style={{ margin: 0, fontSize: 'clamp(12px,1.05vw,15px)', lineHeight: 1.8, letterSpacing: '.02em', color: '#ece6da' }}>
-                  GOD'S OWN MOTION PICTUERS
+                  GOD'S OWN MOTION PICTURES
                   <br />
                   {ADDRESS_LINES.map((line) => (
                     <span key={line}>
@@ -107,7 +107,7 @@ export function ContactPage() {
                 className="gs-hover-accent"
                 style={{ fontSize: 9, letterSpacing: '.3em', color: '#8f887c' }}
               >
-                GOD&apos;S OWN MOTION PICTUERS
+                GOD&apos;S OWN MOTION PICTURES
               </a>
             </div>
           </Reveal>

@@ -234,7 +234,7 @@ export function LocationMap({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.6 }}
           >
-            GOD&apos;S OWN MOTION PICTUERS
+            GOD&apos;S OWN MOTION PICTURES
           </motion.div>
 
           <div
