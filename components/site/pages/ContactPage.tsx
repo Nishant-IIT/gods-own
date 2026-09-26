@@ -1,28 +1,39 @@
 'use client';
 
 import Link from 'next/link';
+import { useState, type SubmitEvent } from 'react';
+import { LocationMap } from '@/components/ui/location-map';
 import { PageShell } from '../PageShell';
 import { ReachMap } from '../ReachMap';
 import { Reveal } from '../Reveal';
 
 const MAIL = 'hello@godsownmotionpictures.com';
 
-function door(n: string, title: string, body: string, cta: string, subject: string) {
-  return { n, title, body, cta, href: `mailto:${MAIL}?subject=${encodeURIComponent(subject)}` };
-}
+const ADDRESS_LINES = [
+  'Flat # 19, 3rd Floor, Ashish Building, Building #37,',
+  'Manish Nagar, Behind Manish Market, 4 Bungalows,',
+  'Andheri West, Mumbai 400053',
+];
 
-const DOORS = [
-  door('01', "I'M AN INVESTOR", 'Investment and strategic partnership.', 'START A CONVERSATION →', 'Investment enquiry'),
-  door('02', "I'M A PRODUCER", 'Co-production and development.', 'START A CONVERSATION →', 'Co-production enquiry'),
-  door('03', "I'M A DISTRIBUTOR", 'Theatrical, OTT, music and international.', 'START A CONVERSATION →', 'Distribution enquiry'),
-  door('04', "I'M A BRAND", 'Advertising, integration and branded content.', 'START A CONVERSATION →', 'Brand partnership enquiry'),
-  door('05', "I'M A CREATOR", 'Talent, filmmaking and music.', 'SEND YOUR WORK →', 'Creative collaboration'),
+const MAP_QUERY = encodeURIComponent(
+  'Ashish Building, Building 37, Manish Nagar, 4 Bungalows, Andheri West, Mumbai 400053',
+);
+
+type FormState = { name: string; company: string; email: string; phone: string };
+
+const EMPTY_FORM: FormState = { name: '', company: '', email: '', phone: '' };
+
+const FIELDS: { key: keyof FormState; label: string; type: string; required: boolean }[] = [
+  { key: 'name', label: 'NAME', type: 'text', required: true },
+  { key: 'company', label: 'COMPANY', type: 'text', required: false },
+  { key: 'email', label: 'EMAIL', type: 'email', required: true },
+  { key: 'phone', label: 'PHONE', type: 'tel', required: false },
 ];
 
 export function ContactPage() {
   return (
     <PageShell footer={<ContactFooter />}>
-      <section style={{ minHeight: '64vh', display: 'flex', alignItems: 'flex-end', padding: 'clamp(120px,20vh,200px) clamp(20px,5vw,80px) clamp(40px,7vh,80px)' }}>
+      <section style={{ minHeight: '58vh', display: 'flex', alignItems: 'flex-end', padding: 'clamp(120px,20vh,200px) clamp(20px,5vw,80px) clamp(40px,7vh,80px)' }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(24px,4vh,42px)' }}>
           <Reveal style={{ fontSize: 'clamp(9px,.72vw,10px)', letterSpacing: '.46em', textIndent: '.46em', color: '#d4a05a' }}>
             CONTACT
@@ -36,63 +47,147 @@ export function ContactPage() {
           </Reveal>
           <Reveal delay={120} style={{ maxWidth: '48ch' }}>
             <p style={{ margin: 0, fontSize: 'clamp(13px,1.15vw,17px)', lineHeight: 1.7, color: '#b3ab9d' }}>
-              Tell us which door you&apos;re at and the right person will answer.
+              Reach out and we&apos;ll get back to you shortly.
             </p>
           </Reveal>
         </div>
       </section>
 
-      <section style={{ padding: 'clamp(20px,4vh,50px) clamp(20px,5vw,80px) clamp(60px,11vh,130px)' }}>
-        <div style={{ maxWidth: 1180, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,270px),1fr))', gap: 'clamp(14px,2vw,26px)' }}>
-          {DOORS.map((d, i) => (
-            <Reveal
-              key={d.n}
-              as="a"
-              href={d.href}
-              delay={i * 70}
-              className="gs-hover-card gs-hover-panel"
-              style={{ display: 'flex', flexDirection: 'column', gap: 14, padding: 'clamp(24px,3.4vw,44px)', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.1)', color: '#ece6da', textDecoration: 'none' }}
+      <section style={{ padding: 'clamp(20px,4vh,50px) clamp(20px,5vw,80px) clamp(70px,12vh,140px)' }}>
+        <div
+          style={{
+            maxWidth: 1180,
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,380px),1fr))',
+            gap: 'clamp(40px,6vw,90px)',
+          }}
+        >
+          <Reveal>
+            <ContactForm />
+          </Reveal>
+          <Reveal delay={80} style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(30px,5vh,48px)' }}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,180px),1fr))',
+                gap: 'clamp(22px,3.4vw,40px)',
+              }}
             >
-              <span style={{ fontFamily: 'ui-monospace,Menlo,monospace', fontSize: 10, letterSpacing: '.2em', color: '#8f887c' }}>{d.n}</span>
-              <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(19px,2.2vw,32px)', lineHeight: 1.15, letterSpacing: '.1em', color: '#ece6da' }}>
-                {d.title}
-              </span>
-              <span style={{ fontSize: 'clamp(11px,.95vw,14px)', lineHeight: 1.7, color: '#b3ab9d' }}>{d.body}</span>
-              <span style={{ marginTop: 8, fontSize: 9, letterSpacing: '.3em', color: '#d4a05a' }}>{d.cta}</span>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <section style={{ padding: 'clamp(40px,7vh,90px) clamp(20px,5vw,80px) clamp(50px,8vh,90px)' }}>
-        <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(30px,5vh,56px)' }}>
-          <Reveal
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,210px),1fr))', gap: 'clamp(22px,3.4vw,52px)', paddingTop: 'clamp(24px,4vh,40px)', borderTop: '1px solid rgba(236,230,218,.1)' }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <span style={{ fontSize: 9, letterSpacing: '.36em', color: '#8f887c' }}>GENERAL</span>
-              <a href={`mailto:${MAIL}`} className="gs-hover-accent" style={{ fontSize: 'clamp(12px,1.05vw,15px)', letterSpacing: '.04em', color: '#ece6da', wordBreak: 'break-word' }}>
-                {MAIL}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <span style={{ fontSize: 9, letterSpacing: '.36em', color: '#8f887c' }}>GENERAL</span>
+                <a href={`mailto:${MAIL}`} className="gs-hover-accent" style={{ fontSize: 'clamp(12px,1.05vw,15px)', letterSpacing: '.04em', color: '#ece6da', wordBreak: 'break-word' }}>
+                  {MAIL}
+                </a>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <span style={{ fontSize: 9, letterSpacing: '.36em', color: '#8f887c' }}>VISIT</span>
+                <p style={{ margin: 0, fontSize: 'clamp(12px,1.05vw,15px)', lineHeight: 1.8, letterSpacing: '.02em', color: '#ece6da' }}>
+                  GOD'S OWN MOTION PICTUERS
+                  <br />
+                  {ADDRESS_LINES.map((line) => (
+                    <span key={line}>
+                      {line}
+                      <br />
+                    </span>
+                  ))}
+                </p>
+              </div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: 20 }}>
+              <LocationMap
+                location="Andheri West, Mumbai"
+                coordinates="19.1197° N, 72.8468° E"
+                mapsUrl={`https://www.google.com/maps/dir/?api=1&destination=${MAP_QUERY}`}
+              />
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="gs-hover-accent"
+                style={{ fontSize: 9, letterSpacing: '.3em', color: '#8f887c' }}
+              >
+                GOD&apos;S OWN MOTION PICTUERS
               </a>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <span style={{ fontSize: 9, letterSpacing: '.36em', color: '#8f887c' }}>STUDIO</span>
-              <span style={{ fontSize: 'clamp(12px,1.05vw,15px)', lineHeight: 1.7, letterSpacing: '.04em', color: '#ece6da' }}>Mumbai, India</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <span style={{ fontSize: 9, letterSpacing: '.36em', color: '#8f887c' }}>FOLLOW</span>
-              <span style={{ display: 'flex', flexWrap: 'wrap', gap: 16, fontSize: 'clamp(12px,1.05vw,15px)', letterSpacing: '.04em' }}>
-                <a href="#" className="gs-hover-accent" style={{ color: '#ece6da' }}>Instagram</a>
-                <a href="#" className="gs-hover-accent" style={{ color: '#ece6da' }}>YouTube</a>
-              </span>
-            </div>
           </Reveal>
-          <p style={{ margin: 0, fontFamily: 'ui-monospace,Menlo,monospace', fontSize: 10, letterSpacing: '.16em', color: '#8f887c' }}>
-            PLACEHOLDER CONTACT DETAILS — TO BE REPLACED
-          </p>
         </div>
       </section>
     </PageShell>
+  );
+}
+
+function ContactForm() {
+  const [form, setForm] = useState<FormState>(EMPTY_FORM);
+  const [sent, setSent] = useState(false);
+
+  function handleSubmit(e: SubmitEvent) {
+    e.preventDefault();
+    const body = [`Name: ${form.name}`, `Company: ${form.company}`, `Email: ${form.email}`, `Phone: ${form.phone}`].join('\n');
+    window.location.href = `mailto:${MAIL}?subject=${encodeURIComponent('Website enquiry')}&body=${encodeURIComponent(body)}`;
+    setSent(true);
+  }
+
+  return (
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(24px,3.4vh,36px)' }}>
+      {FIELDS.map((f) => (
+        <label key={f.key} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <span style={{ fontSize: 9, letterSpacing: '.36em', color: '#8f887c' }}>
+            {f.label}
+            {f.required ? '' : '  (OPTIONAL)'}
+          </span>
+          <input
+            type={f.type}
+            required={f.required}
+            value={form[f.key]}
+            onChange={(e) => {
+              setForm((s) => ({ ...s, [f.key]: e.target.value }));
+              setSent(false);
+            }}
+            className="gs-contact-input"
+            style={{
+              background: 'transparent',
+              border: 'none',
+              borderBottom: '1px solid rgba(236,230,218,.2)',
+              borderRadius: 0,
+              padding: '10px 2px',
+              transition: 'border-color .3s ease',
+              fontFamily: "'Karla',system-ui,sans-serif",
+              fontSize: 'clamp(14px,1.15vw,17px)',
+              color: '#ece6da',
+              outline: 'none',
+            }}
+          />
+        </label>
+      ))}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 8 }}>
+        <button
+          type="submit"
+          className="gs-hover-accent"
+          style={{
+            alignSelf: 'flex-start',
+            background: 'none',
+            border: 'none',
+            padding: 0,
+            fontSize: 9,
+            letterSpacing: '.3em',
+            color: '#d4a05a',
+            cursor: 'pointer',
+          }}
+        >
+          SEND MESSAGE →
+        </button>
+        {sent && (
+          <p style={{ margin: 0, maxWidth: '38ch', fontSize: 11, lineHeight: 1.7, letterSpacing: '.02em', color: '#b3ab9d' }}>
+            Opening your email app with this message. If nothing opens, write to us directly at{' '}
+            <a href={`mailto:${MAIL}`} className="gs-hover-accent" style={{ color: '#ece6da' }}>
+              {MAIL}
+            </a>
+            .
+          </p>
+        )}
+      </div>
+    </form>
   );
 }
 
@@ -118,12 +213,11 @@ function ContactFooter() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <span style={{ fontSize: 'clamp(9px,.72vw,10px)', letterSpacing: '.46em', textIndent: '.46em', color: '#d4a05a' }}>REACH</span>
             <h2 style={{ margin: 0, maxWidth: '20ch', fontFamily: "'Oswald',sans-serif", fontWeight: 200, fontSize: 'clamp(23px,3.8vw,58px)', lineHeight: 1.07, letterSpacing: '.04em', color: '#ece6da', textWrap: 'balance' }}>
-              BORN IN INDIA. BUILT FOR AUDIENCES EVERYWHERE.
+              BORN IN INDIA.
+              <br />
+              BUILT FOR THE WORLD.
             </h2>
           </div>
-          <p style={{ margin: 0, maxWidth: '34ch', fontSize: 'clamp(12px,1.02vw,15px)', lineHeight: 1.75, color: '#b3ab9d', textWrap: 'pretty' }}>
-            Working from Mumbai, with stories built to travel through genre, emotion, music and characters.
-          </p>
         </div>
 
         <ReachMap />

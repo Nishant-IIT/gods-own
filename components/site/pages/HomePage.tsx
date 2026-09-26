@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
+import { VideoFrame } from '../VideoFrame';
 
 const ENGINE = [
   { n: '01', title: 'STORY', items: ['Development', 'Writing', 'Concepts', 'Adaptations'] },
@@ -145,6 +146,22 @@ export function HomePage() {
             }}
           />
         </Reveal>
+      </section>
+
+      {/* SHOWREEL */}
+      <section style={{ padding: 'clamp(20px,4vh,60px) clamp(20px,5vw,80px) clamp(50px,9vh,110px)' }}>
+        <div style={{ maxWidth: 1320, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(20px,3.4vh,36px)' }}>
+          <Reveal style={eyebrow}>SHOWREEL</Reveal>
+          <Reveal delay={90}>
+            <VideoFrame
+              label="GOD'S OWN — SHOWREEL"
+              meta="FILM · SERIES · MUSIC · COMMERCIALS"
+              ratio="21/9"
+              placeholder="SHOWREEL — poster frame (a strong, high-contrast still)"
+              note="REEL COMING SOON"
+            />
+          </Reveal>
+        </div>
       </section>
 
       {/* 02 WHAT IS GOD'S OWN */}
