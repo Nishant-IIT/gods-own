@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
+import { CometCard } from '@/components/ui/comet-card';
 import { PageShell } from '../PageShell';
 import { PosterCarousel } from '../PosterCarousel';
 import { Reveal } from '../Reveal';
@@ -34,6 +35,59 @@ const eyebrowMuted = { fontSize: 'clamp(9px,.72vw,10px)', letterSpacing: '.46em'
 const roleStyle = { fontSize: 'clamp(9px,.78vw,11px)', letterSpacing: '.36em', color: '#d4a05a' } as const;
 const skillsStyle = { fontSize: 'clamp(11px,.95vw,13px)', lineHeight: 1.9, letterSpacing: '.14em', color: '#8f887c' } as const;
 const bodyColStyle = { display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2.4vh,22px)', maxWidth: '60ch', fontSize: 'clamp(13px,1.08vw,16px)', lineHeight: 1.75, color: '#b3ab9d' } as const;
+
+function PortraitCard({
+  src,
+  alt,
+  placeholder,
+  caption,
+  index,
+  align = 'start',
+}: {
+  src: string;
+  alt: string;
+  placeholder: string;
+  caption: string;
+  index: string;
+  align?: 'start' | 'end';
+}) {
+  return (
+    <CometCard style={{ width: '100%', maxWidth: 430, justifySelf: align }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          borderRadius: 4,
+          border: '1px solid rgba(236,230,218,.1)',
+          background: 'linear-gradient(162deg,#141310,#0a0908)',
+          padding: 'clamp(9px,.9vw,14px)',
+          boxShadow: '0 40px 80px -46px rgba(0,0,0,.95)',
+          transformStyle: 'preserve-3d',
+        }}
+      >
+        <div style={{ aspectRatio: '4/5', width: '100%' }}>
+          <ImageSlot src={src} alt={alt} placeholder={placeholder} shape="rect" />
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 12,
+            padding: 'clamp(12px,1.3vw,16px) clamp(3px,.4vw,6px) clamp(3px,.3vw,5px)',
+            fontFamily: 'ui-monospace,Menlo,monospace',
+            fontSize: 10,
+            letterSpacing: '.2em',
+            color: '#8f887c',
+          }}
+        >
+          <span>{caption}</span>
+          <span style={{ opacity: 0.5 }}>{index}</span>
+        </div>
+      </div>
+    </CometCard>
+  );
+}
 
 function ExpandableBio({ paragraphs }: { paragraphs: string[] }) {
   const [expanded, setExpanded] = useState(false);
@@ -99,14 +153,13 @@ export function PeoplePage() {
       <section style={{ padding: 'clamp(40px,8vh,100px) clamp(20px,5vw,80px)' }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(30px,5vh,56px)' }}>
           <Reveal style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,270px),1fr))', gap: 'clamp(26px,4.4vw,64px)', alignItems: 'start' }}>
-            <div style={{ aspectRatio: '4/5', maxWidth: 430, width: '100%' }}>
-              <ImageSlot
-                src="/media/people/prashant-ingole.jpg"
-                alt="Portrait — Prashant Ingole"
-                placeholder="PORTRAIT — Prashant Ingole"
-                shape="rect"
-              />
-            </div>
+            <PortraitCard
+              src="/media/people/prashant-ingole.jpg"
+              alt="Portrait — Prashant Ingole"
+              placeholder="PORTRAIT — Prashant Ingole"
+              caption="PRASHANT INGOLE"
+              index="01"
+            />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(26px,4vh,40px)' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2.4vh,22px)' }}>
                 <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(28px,4.2vw,66px)', lineHeight: 1, letterSpacing: '.04em', color: '#ece6da' }}>
@@ -158,14 +211,14 @@ export function PeoplePage() {
               </div>
               <ExpandableBio paragraphs={ABHIJEET_BIO} />
             </div>
-            <div style={{ aspectRatio: '4/5', maxWidth: 430, width: '100%', justifySelf: 'end' }}>
-              <ImageSlot
-                src="/media/people/abhijeet-nag.png"
-                alt="Portrait — Abhijeet Nag"
-                placeholder="PORTRAIT — Abhijeet Nag"
-                shape="rect"
-              />
-            </div>
+            <PortraitCard
+              src="/media/people/abhijeet-nag.png"
+              alt="Portrait — Abhijeet Nag"
+              placeholder="PORTRAIT — Abhijeet Nag"
+              caption="ABHIJEET NAG"
+              index="02"
+              align="end"
+            />
           </Reveal>
         </div>
       </section>
