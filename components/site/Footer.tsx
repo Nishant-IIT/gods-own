@@ -354,6 +354,20 @@ export function Footer() {
                 GOD&apos;S OWN
               </text>
             </svg>
+            <div
+              style={{
+                textAlign: 'center',
+                marginTop: 'clamp(-70px,-5.7vh,-40px)',
+                fontFamily: "'Oswald',sans-serif",
+                fontWeight: 200,
+                fontSize: 'clamp(22px,3.53vw,61px)',
+                lineHeight: 'normal',
+                letterSpacing: '.5em',
+                color: '#8f887c',
+              }}
+            >
+              MOTION PICTURES
+            </div>
           </div>
         </div>
       </div>

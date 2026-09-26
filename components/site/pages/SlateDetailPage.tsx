@@ -11,12 +11,12 @@ export function SlateDetailPage({ project }: { project: SlateProject }) {
     <PageShell>
       <section
         style={{
-          minHeight: '92vh',
+          minHeight: '62vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-end',
           gap: 'clamp(24px,4vh,44px)',
-          padding: 'clamp(110px,18vh,180px) clamp(20px,5vw,80px) clamp(40px,7vh,80px)',
+          padding: 'clamp(90px,10vh,110px) clamp(20px,5vw,80px) clamp(40px,7vh,80px)',
         }}
       >
         <Reveal style={{ maxWidth: 1180, margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(20px,3.4vh,34px)' }}>
