@@ -1,38 +1,75 @@
 'use client';
 
-import Link from 'next/link';
+import { useState } from 'react';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 import { PageShell } from '../PageShell';
+import { PosterCarousel } from '../PosterCarousel';
 import { Reveal } from '../Reveal';
 
-const PRASHANT_TAGS = ['BAJIRAO MASTANI', 'MARY KOM', 'RACE 2', '83', 'JALEBI'];
-
-const NETWORK = [
-  { title: 'Established Artists', body: 'Composers, singers and performers with audiences of their own.' },
-  { title: 'Emerging Creators', body: 'First-time voices given a real budget and a real release.' },
-  { title: 'Filmmakers', body: 'Directors and cinematographers who own a visual language.' },
-  { title: 'Writers', body: 'Screenwriters, lyricists and dialogue writers across languages.' },
-  { title: 'Musicians', body: 'Producers and arrangers building the sound of each project.' },
-  { title: 'Technical Talent', body: 'Animation, VFX and virtual production specialists.' },
+const PRASHANT_WORK = [
+  { title: 'BAJIRAO MASTANI', status: 'FEATURE FILM', href: '/work' },
+  { title: 'MARY KOM', status: 'FEATURE FILM', href: '/work' },
+  { title: 'RACE 2', status: 'FEATURE FILM', href: '/work' },
+  { title: '83', status: 'FEATURE FILM', href: '/work' },
+  { title: 'JALEBI', status: 'FEATURE FILM', href: '/work' },
+  { title: 'BUDH (AWAKENING)', status: 'SHORT FILM', href: '/work' },
 ];
 
-const sectionPad = 'clamp(50px,9vh,120px) clamp(20px,5vw,80px)';
+const PRASHANT_BIO = [
+  `Over the past decade, I've had the privilege of contributing to some incredible films such as Bajirao Mastani, Mary Kom, Race 2, 83, and Jalebi. Each project has been a journey where music and storytelling come together to create moments that audiences carry with them.`,
+  `Songs like Malhari, Party On My Mind, Ziddi Dil, and Pal have been particularly special in my journey. Every song comes from a place of deep emotion and intent—whether it's the infectious energy of celebration, the spirit of determination, or the quiet beauty of love.`,
+  `While music has been my first love, storytelling has always pushed me to explore beyond lyrics. That passion led me to step behind the camera with my short film Budh (Awakening). The film, which focuses on women empowerment, became an important creative milestone for me. It was an opportunity to use cinema not just as entertainment, but as a voice—to question, to provoke thought, and hopefully to inspire change. The recognition and appreciation the film received reaffirmed my belief in the power of stories.`,
+  `For me, whether I'm writing a song or directing a film, the goal remains the same: to create something honest, powerful, and emotionally resonant. I continue to explore stories through music and cinema with the hope that they leave a lasting imprint on hearts and minds, just as the stories that inspired me once did.`,
+];
+
+const ABHIJEET_BIO = [
+  `I started my journey as a footballer and played for several known clubs in Nagpur. At the age of 17, I represented my state at the national level, an experience that taught me some of the most important lessons that would later shape my approach to Filmmaking, Discipline, Teamwork, perseverance and the ability to perform under pressure.`,
+  `I then pursued my MBA in Finance & Marketing from G.H. Raisoni, Nagpur. After completing my education, I worked professionally with organisations including ICICI Direct and EClerx | Morgan Stanley, across Mumbai and Pune.`,
+  `While I was building my corporate career, filmmaking remained the one thing I could never put aside. I continued learning, experimenting and developing my creative skills alongside my professional work. Slowly, that passion transformed into a profession and eventually into the career.`,
+  `Today, with 7+ years of professional experience in filmmaking and content production, I work primarily as a DIRECTOR, while also taking on responsibilities as a Showrunner, Creative Producer, Creative Director and Post Producer.`,
+  `My work spans multiple formats and platforms from TVCs and Digital Advertising Films to Brand Films, Music Videos, Talk Shows, Corporate Films, Feature Films, Webshow, Fashion Films, Real-Estate Films, Motion Graphics, Animation and long-form content.`,
+];
+
 const eyebrowMuted = { fontSize: 'clamp(9px,.72vw,10px)', letterSpacing: '.46em', textIndent: '.46em', color: '#8f887c' } as const;
 const roleStyle = { fontSize: 'clamp(9px,.78vw,11px)', letterSpacing: '.36em', color: '#d4a05a' } as const;
 const skillsStyle = { fontSize: 'clamp(11px,.95vw,13px)', lineHeight: 1.9, letterSpacing: '.14em', color: '#8f887c' } as const;
-const quoteStyle = {
-  margin: 0,
-  maxWidth: '40ch',
-  fontFamily: "'Oswald',sans-serif",
-  fontWeight: 200,
-  fontSize: 'clamp(17px,2.2vw,34px)',
-  lineHeight: 1.35,
-  letterSpacing: '.02em',
-  color: '#ece6da',
-  textWrap: 'pretty',
-} as const;
 const bodyColStyle = { display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2.4vh,22px)', maxWidth: '60ch', fontSize: 'clamp(13px,1.08vw,16px)', lineHeight: 1.75, color: '#b3ab9d' } as const;
-const bioGridStyle = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,300px),1fr))', gap: 'clamp(24px,4vw,64px)', alignItems: 'start' } as const;
+
+function ExpandableBio({ paragraphs }: { paragraphs: string[] }) {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? paragraphs : paragraphs.slice(0, 1);
+
+  return (
+    <div style={bodyColStyle}>
+      {visible.map((p, i) => (
+        <p key={i} style={{ margin: 0, textWrap: 'pretty' }}>
+          {p}
+        </p>
+      ))}
+      {paragraphs.length > 1 && (
+        <button
+          type="button"
+          onClick={() => setExpanded((e) => !e)}
+          className="gs-hover-accent"
+          style={{
+            alignSelf: 'flex-start',
+            background: 'none',
+            border: 0,
+            padding: 0,
+            cursor: 'pointer',
+            fontSize: 10,
+            letterSpacing: '.24em',
+            color: '#8f887c',
+            borderBottom: '1px solid rgba(143,136,124,.4)',
+            paddingBottom: 4,
+          }}
+        >
+          {expanded ? 'READ LESS' : 'READ MORE →'}
+        </button>
+      )}
+    </div>
+  );
+}
 
 export function PeoplePage() {
   return (
@@ -61,188 +98,99 @@ export function PeoplePage() {
       {/* PRASHANT INGOLE */}
       <section style={{ padding: 'clamp(40px,8vh,100px) clamp(20px,5vw,80px)' }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(30px,5vh,56px)' }}>
-          <Reveal style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,270px),1fr))', gap: 'clamp(26px,4.4vw,64px)', alignItems: 'end' }}>
+          <Reveal style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,270px),1fr))', gap: 'clamp(26px,4.4vw,64px)', alignItems: 'start' }}>
             <div style={{ aspectRatio: '4/5', maxWidth: 430, width: '100%' }}>
-              <ImageSlot alt="Portrait — Prashant Ingole" placeholder="PORTRAIT — Prashant Ingole" shape="rect" />
+              <ImageSlot
+                src="/media/people/prashant-ingole.jpg"
+                alt="Portrait — Prashant Ingole"
+                placeholder="PORTRAIT — Prashant Ingole"
+                shape="rect"
+              />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2.4vh,22px)' }}>
-              <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(28px,4.2vw,66px)', lineHeight: 1, letterSpacing: '.04em', color: '#ece6da' }}>
-                PRASHANT INGOLE
-              </span>
-              <span style={roleStyle}>FOUNDER / CREATIVE LEAD</span>
-              <span style={skillsStyle}>LYRICIST · WRITER · DIRECTOR</span>
-            </div>
-          </Reveal>
-
-          <Reveal style={bioGridStyle}>
-            <p style={quoteStyle}>
-              For me, storytelling has always been about emotion—about finding the right words that can move people,
-              inspire them, and stay with them long after the music fades or the screen goes dark.
-            </p>
-            <div style={bodyColStyle}>
-              <p style={{ margin: 0, textWrap: 'pretty' }}>
-                Over the past decade, I&apos;ve had the privilege of contributing to some incredible films such as
-                Bajirao Mastani, Mary Kom, Race 2, 83, and Jalebi. Each project has been a journey where music and
-                storytelling come together to create moments that audiences carry with them.
-              </p>
-              <p style={{ margin: 0, textWrap: 'pretty' }}>
-                Songs like Malhari, Party On My Mind, Ziddi Dil, and Pal have been particularly special in my
-                journey. Every song comes from a place of deep emotion and intent—whether it&apos;s the infectious
-                energy of celebration, the spirit of determination, or the quiet beauty of love.
-              </p>
-              <p style={{ margin: 0, textWrap: 'pretty' }}>
-                While music has been my first love, storytelling has always pushed me to explore beyond lyrics. That
-                passion led me to step behind the camera with my short film Budh (Awakening). The film, which
-                focuses on women empowerment, became an important creative milestone for me. It was an opportunity
-                to use cinema not just as entertainment, but as a voice—to question, to provoke thought, and
-                hopefully to inspire change. The recognition and appreciation the film received reaffirmed my belief
-                in the power of stories.
-              </p>
-              <p style={{ margin: 0, textWrap: 'pretty' }}>
-                For me, whether I&apos;m writing a song or directing a film, the goal remains the same: to create
-                something honest, powerful, and emotionally resonant. I continue to explore stories through music
-                and cinema with the hope that they leave a lasting imprint on hearts and minds, just as the stories
-                that inspired me once did.
-              </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(26px,4vh,40px)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2.4vh,22px)' }}>
+                <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(28px,4.2vw,66px)', lineHeight: 1, letterSpacing: '.04em', color: '#ece6da' }}>
+                  PRASHANT INGOLE
+                </span>
+                <span style={roleStyle}>FOUNDER / CREATIVE LEAD</span>
+                <span style={skillsStyle}>LYRICIST · WRITER · DIRECTOR</span>
+              </div>
+              <ExpandableBio paragraphs={PRASHANT_BIO} />
             </div>
           </Reveal>
+        </div>
+      </section>
 
-          <Reveal
+      <section style={{ padding: 'clamp(10px,2vh,30px) 0 clamp(30px,5vh,70px)' }}>
+        <Reveal style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2.4vh,26px)' }}>
+          <div
             style={{
               display: 'flex',
               flexWrap: 'wrap',
-              gap: 'clamp(14px,2.6vw,38px)',
-              paddingTop: 'clamp(18px,3vh,28px)',
-              borderTop: '1px solid rgba(236,230,218,.12)',
-              fontSize: 'clamp(10px,.82vw,12px)',
-              letterSpacing: '.24em',
-              color: '#8f887c',
+              alignItems: 'baseline',
+              justifyContent: 'space-between',
+              gap: 16,
+              padding: '0 clamp(20px,5vw,80px)',
+              maxWidth: 1320,
+              margin: '0 auto',
+              width: '100%',
+              boxSizing: 'border-box',
             }}
           >
-            {PRASHANT_TAGS.map((t) => (
-              <span key={t}>{t}</span>
-            ))}
-            <span style={{ color: '#d4a05a' }}>BUDH (AWAKENING)</span>
-            <Link
-              href="/work"
-              className="gs-hover-accent"
-              style={{ marginLeft: 'auto', color: '#8f887c', borderBottom: '1px solid rgba(143,136,124,.4)', paddingBottom: 4 }}
-            >
-              SELECTED WORK →
-            </Link>
-          </Reveal>
-        </div>
+            <span style={eyebrowMuted}>SELECTED WORK — PRASHANT INGOLE</span>
+            <span style={{ fontFamily: 'ui-monospace,Menlo,monospace', fontSize: 10, letterSpacing: '.16em', color: '#8f887c' }}>DRAG TO TURN</span>
+          </div>
+          <PosterCarousel items={PRASHANT_WORK} />
+        </Reveal>
       </section>
 
       {/* ABHIJEET NAG */}
       <section style={{ padding: 'clamp(40px,8vh,100px) clamp(20px,5vw,80px)' }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(30px,5vh,56px)' }}>
-          <Reveal style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,270px),1fr))', gap: 'clamp(26px,4.4vw,64px)', alignItems: 'end' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2.4vh,22px)' }}>
-              <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(28px,4.2vw,66px)', lineHeight: 1, letterSpacing: '.04em', color: '#ece6da' }}>
-                ABHIJEET NAG
-              </span>
-              <span style={roleStyle}>DIRECTOR / SHOWRUNNER</span>
-              <span style={skillsStyle}>DIRECTOR · SHOWRUNNER · CREATIVE PRODUCER · POST PRODUCER</span>
+          <Reveal style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,270px),1fr))', gap: 'clamp(26px,4.4vw,64px)', alignItems: 'start' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(26px,4vh,40px)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2.4vh,22px)' }}>
+                <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(28px,4.2vw,66px)', lineHeight: 1, letterSpacing: '.04em', color: '#ece6da' }}>
+                  ABHIJEET NAG
+                </span>
+                <span style={roleStyle}>DIRECTOR / SHOWRUNNER</span>
+                <span style={skillsStyle}>DIRECTOR · SHOWRUNNER · CREATIVE PRODUCER · POST PRODUCER</span>
+              </div>
+              <ExpandableBio paragraphs={ABHIJEET_BIO} />
             </div>
             <div style={{ aspectRatio: '4/5', maxWidth: 430, width: '100%', justifySelf: 'end' }}>
-              <ImageSlot alt="Portrait — Abhijeet Nag" placeholder="PORTRAIT — Abhijeet Nag" shape="rect" />
-            </div>
-          </Reveal>
-
-          <Reveal style={bioGridStyle}>
-            <p style={quoteStyle}>
-              My journey into filmmaking did not begin in a film school or on a film set. It began much earlier when
-              I was just 13 years old, with three very different goals: Football, an MBA, and Filmmaking.
-            </p>
-            <div style={bodyColStyle}>
-              <p style={{ margin: 0, textWrap: 'pretty' }}>
-                I started my journey as a footballer and played for several known clubs in Nagpur. At the age of 17,
-                I represented my state at the national level, an experience that taught me some of the most
-                important lessons that would later shape my approach to Filmmaking, Discipline, Teamwork,
-                perseverance and the ability to perform under pressure.
-              </p>
-              <p style={{ margin: 0, textWrap: 'pretty' }}>
-                I then pursued my MBA in Finance &amp; Marketing from G.H. Raisoni, Nagpur. After completing my
-                education, I worked professionally with organisations including ICICI Direct and EClerx | Morgan
-                Stanley, across Mumbai and Pune.
-              </p>
-              <p style={{ margin: 0, textWrap: 'pretty' }}>
-                While I was building my corporate career, filmmaking remained the one thing I could never put
-                aside. I continued learning, experimenting and developing my creative skills alongside my
-                professional work. Slowly, that passion transformed into a profession and eventually into the
-                career.
-              </p>
-              <p style={{ margin: 0, textWrap: 'pretty' }}>
-                Today, with 7+ years of professional experience in filmmaking and content production, I work
-                primarily as a DIRECTOR, while also taking on responsibilities as a Showrunner, Creative Producer,
-                Creative Director and Post Producer.
-              </p>
-              <p style={{ margin: 0, textWrap: 'pretty' }}>
-                My work spans multiple formats and platforms from TVCs and Digital Advertising Films to Brand Films,
-                Music Videos, Talk Shows, Corporate Films, Feature Films, Webshow, Fashion Films, Real-Estate Films,
-                Motion Graphics, Animation and long-form content.
-              </p>
+              <ImageSlot
+                src="/media/people/abhijeet-nag.png"
+                alt="Portrait — Abhijeet Nag"
+                placeholder="PORTRAIT — Abhijeet Nag"
+                shape="rect"
+              />
             </div>
           </Reveal>
         </div>
       </section>
 
-      <section style={{ padding: sectionPad }}>
-        <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(30px,5vh,52px)' }}>
-          <Reveal style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-            <span style={eyebrowMuted}>TALENT NETWORK</span>
-            <h2 style={{ margin: 0, maxWidth: '24ch', fontFamily: "'Oswald',sans-serif", fontWeight: 200, fontSize: 'clamp(23px,3.4vw,50px)', lineHeight: 1.1, letterSpacing: '.03em', color: '#ece6da', textWrap: 'balance' }}>
-              Established voices, and the next generation.
-            </h2>
-          </Reveal>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,190px),1fr))', gap: 'clamp(14px,2vw,26px)' }}>
-            {NETWORK.map((n, i) => (
-              <Reveal
-                key={n.title}
-                delay={i * 70}
-                style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 'clamp(20px,2.8vw,32px)', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.1)' }}
-              >
-                <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(16px,1.8vw,25px)', lineHeight: 1.2, letterSpacing: '.06em', color: '#ece6da' }}>
-                  {n.title}
-                </span>
-                <span style={{ fontSize: 'clamp(11px,.95vw,13px)', lineHeight: 1.7, color: '#b3ab9d' }}>{n.body}</span>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal style={{ maxWidth: '56ch' }}>
-            <p style={{ margin: 0, fontSize: 'clamp(13px,1.1vw,17px)', lineHeight: 1.7, color: '#b3ab9d' }}>
-              We collaborate with established voices and discover the next generation of storytellers.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      <section style={{ padding: 'clamp(50px,9vh,120px) clamp(20px,5vw,80px) clamp(50px,8vh,90px)' }}>
-        <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(26px,4.4vh,46px)' }}>
-          <Reveal
-            as="h2"
-            style={{ margin: 0, maxWidth: '22ch', fontFamily: "'Oswald',sans-serif", fontWeight: 200, fontSize: 'clamp(24px,4.2vw,66px)', lineHeight: 1.08, letterSpacing: '.03em', color: '#ece6da', textWrap: 'balance' }}
+      <section style={{ padding: 'clamp(10px,2vh,30px) 0 clamp(30px,5vh,70px)' }}>
+        <Reveal style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2.4vh,26px)' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'baseline',
+              justifyContent: 'space-between',
+              gap: 16,
+              padding: '0 clamp(20px,5vw,80px)',
+              maxWidth: 1320,
+              margin: '0 auto',
+              width: '100%',
+              boxSizing: 'border-box',
+            }}
           >
-            IF YOU WRITE, DIRECT, COMPOSE OR BUILD — SEND IT.
-          </Reveal>
-          <Reveal delay={80} style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(12px,1.6vw,20px)' }}>
-            <a
-              href="mailto:hello@godsownmotionpictures.com?subject=Creative%20collaboration"
-              className="gs-hover-fill"
-              style={{ padding: '15px clamp(20px,2.6vw,34px)', fontSize: 10, letterSpacing: '.3em', color: '#000', background: '#ece6da' }}
-            >
-              SEND YOUR WORK
-            </a>
-            <Link
-              href="/studio"
-              className="gs-hover-outline"
-              style={{ padding: '15px clamp(20px,2.6vw,34px)', fontSize: 10, letterSpacing: '.3em', color: '#ece6da', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.28)' }}
-            >
-              ABOUT THE STUDIO
-            </Link>
-          </Reveal>
-        </div>
+            <span style={eyebrowMuted}>SELECTED WORK</span>
+            <span style={{ fontFamily: 'ui-monospace,Menlo,monospace', fontSize: 10, letterSpacing: '.16em', color: '#8f887c' }}>DRAG TO TURN</span>
+          </div>
+          <PosterCarousel items={PRASHANT_WORK} />
+        </Reveal>
       </section>
     </PageShell>
   );
