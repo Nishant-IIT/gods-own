@@ -12,7 +12,7 @@ const LIVE_GREEN = '#34D399';
 interface LocationMapProps {
   location?: string;
   coordinates?: string;
-  /** Opened in a new tab when the card is clicked — typically a Google Maps directions link. */
+  /** Href for the card — typically a Google Maps directions link. Opened in a new tab. */
   mapsUrl?: string;
   className?: string;
 }
@@ -22,7 +22,8 @@ interface LocationMapProps {
  * Tailwind reference component and restyled with this site's own palette
  * (inline styles, no utility classes) so it matches the rest of the
  * hand-built studio site instead of pulling in a Tailwind/shadcn token layer.
- * Always shown in its expanded state; clicking opens `mapsUrl` in a new tab.
+ * Always shown in its expanded state; the whole card is an anchor to `mapsUrl`,
+ * opened in a new tab.
  */
 export function LocationMap({
   location = 'San Francisco, CA',
@@ -31,7 +32,7 @@ export function LocationMap({
   className,
 }: LocationMapProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLAnchorElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
   const mouseX = useMotionValue(0);
@@ -56,19 +57,27 @@ export function LocationMap({
     setIsHovered(false);
   }
 
-  function handleClick() {
-    if (mapsUrl) window.open(mapsUrl, '_blank', 'noopener,noreferrer');
-  }
-
   return (
-    <motion.div
+    <motion.a
       ref={containerRef}
       className={className}
-      style={{ position: 'relative', width: '100%', maxWidth: 560, cursor: 'pointer', userSelect: 'none', perspective: 1000 }}
+      href={mapsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        position: 'relative',
+        display: 'block',
+        width: '100%',
+        maxWidth: 560,
+        cursor: 'pointer',
+        userSelect: 'none',
+        perspective: 1000,
+        color: 'inherit',
+        textDecoration: 'none',
+      }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
     >
       <motion.div
         style={{
@@ -317,6 +326,6 @@ export function LocationMap({
       >
         Get directions →
       </motion.p>
-    </motion.div>
+    </motion.a>
   );
 }
