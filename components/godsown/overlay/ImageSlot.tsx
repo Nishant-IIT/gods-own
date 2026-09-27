@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import type { CSSProperties } from 'react';
+import { stillFor } from '@/content/media';
 
 type Props = {
   /** Real still, once one is supplied — drop a file under public/media and pass its path here. */
@@ -11,25 +12,29 @@ type Props = {
   shape?: 'rect' | 'rounded';
   className?: string;
   style?: CSSProperties;
+  /** Opt out of the temporary ImageKit fallback and show the bare frame instead. */
+  noFallback?: boolean;
 };
 
 /**
  * Replaces the design-canvas-only `<image-slot>` custom element (drag/drop
- * editing only works inside the Claude Design runtime). Renders a real image
- * the moment `src` is supplied; until then, an elegant placeholder frame that
- * matches the site's palette instead of a broken image or fabricated stock art —
- * the brief is explicit: don't invent career imagery that doesn't exist yet.
+ * editing only works inside the Claude Design runtime). Renders `src` when one
+ * is supplied. Otherwise — TEMPORARY, while the ImageKit integration is being
+ * verified — it deals a library still keyed off the slot's own label (see
+ * `content/media.ts`), so no slot is empty. The palette-matched placeholder
+ * frame remains as the last resort for `noFallback` slots.
  */
-export function ImageSlot({ src, alt, placeholder, shape = 'rect', className, style }: Props) {
+export function ImageSlot({ src, alt, placeholder, shape = 'rect', className, style, noFallback }: Props) {
   const radius = shape === 'rounded' ? 18 : 2;
+  const resolved = src ?? (noFallback ? undefined : stillFor(placeholder || alt));
 
-  if (src) {
+  if (resolved) {
     return (
       <div
         className={className}
         style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', borderRadius: radius, ...style }}
       >
-        <Image src={src} alt={alt} fill sizes="90vw" style={{ objectFit: 'cover' }} />
+        <Image src={resolved} alt={alt} fill sizes="90vw" style={{ objectFit: 'cover' }} />
       </div>
     );
   }
