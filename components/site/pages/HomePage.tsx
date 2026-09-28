@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { FRAMES } from '@/content/frames';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
+import { LogoRibbon } from '@/components/ui/logo-ribbon';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
 import { VideoFrame } from '../VideoFrame';
@@ -492,6 +493,12 @@ export function HomePage() {
               </div>
             ))}
           </div>
+          {/* The brand marks belong to this section rather than a numbered one
+              of their own: film credits and client work are the same claim,
+              and the ribbon's own eyebrow already sets it apart as a band. */}
+          <Reveal>
+            <LogoRibbon />
+          </Reveal>
         </div>
       </section>
 
