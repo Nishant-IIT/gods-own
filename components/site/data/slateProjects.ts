@@ -12,6 +12,13 @@ export type SlateProject = {
   /** The three kicker lines on the detail masthead: type, genre, status. */
   kicker: [string, string];
   logline: string;
+  /**
+   * Key art for the detail masthead — two separate uploads, not one image
+   * cropped twice: `wide` is composed for the 16:9 frame, `phone` for the 9:16
+   * one a handset gets. Both are ImageKit media-library paths. Optional as a
+   * pair, never as a half, so a project can't ship art for one device only.
+   */
+  keyArt?: { wide: string; phone: string };
   rows: { label: string; body: string }[];
 };
 

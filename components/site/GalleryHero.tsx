@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
+import type { FrameName } from '@/content/frames';
 
 type HeroItem = { label: string; ph?: string };
 
@@ -33,6 +34,24 @@ const NARROW: (CellPlacement | null)[] = [
   [5, 4, 4, 1],
 ];
 const ORIGIN = ['top right', 'center', 'bottom right', 'top right', 'center'];
+
+/**
+ * Frame per cell. Worked against the `1fr 0.5fr 0.5fr 1fr` rows the placements
+ * land on, cells 0, 3 and 4 come out near 16:9 while the two right-hand cells
+ * come out near 4:5 — so each asks ImageKit for the master that crops into its
+ * own shape with the least thrown away.
+ */
+const CELL_FRAMES: FrameName[] = ['cinematic', 'editorial', 'editorial', 'cinematic', 'cinematic'];
+
+/**
+ * `sizes` per cell, read straight off the placements above: a cell spanning n
+ * of the 8 columns is drawn at roughly n/8 of the viewport. Cells 1 and 2 drop
+ * out below 768px, so their narrow branch is moot and they keep the wide share.
+ */
+const CELL_SIZES = WIDE.map((wide, i) => {
+  const share = (p: CellPlacement | null) => `${Math.round((((p ?? wide)![1]) / 8) * 100)}vw`;
+  return `(max-width: 767px) ${share(NARROW[i])}, ${share(wide)}`;
+});
 
 const ease = (x: number) => x * x * (3 - 2 * x);
 
@@ -187,6 +206,8 @@ export function GalleryHero({ eyebrow = 'PROOF', title = 'SELECTED WORK', sub = 
                 alt={c.label || c.ph || 'Still'}
                 placeholder={c.ph || `${c.label || `Still ${i + 1}`} — still`}
                 shape="rect"
+                frame={CELL_FRAMES[i]}
+                sizes={CELL_SIZES[i]}
                 style={{ position: 'absolute', inset: 0 }}
               />
               <span

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { SLATE_PROJECTS, type SlateCategory } from '../data/slateProjects';
+import { FRAMES } from '@/content/frames';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 import { PageShell } from '../PageShell';
 import { PosterCarousel } from '../PosterCarousel';
@@ -104,8 +105,8 @@ export function SlatePage() {
                 className="gs-hover-card"
                 style={{ display: 'flex', flexDirection: 'column', background: '#0a0a0a', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.09)', color: '#ece6da', textDecoration: 'none' }}
               >
-                <div style={{ position: 'relative', aspectRatio: '3/2', overflow: 'hidden' }}>
-                  <ImageSlot alt={`${p.title} — key art`} placeholder={`${p.title} — key art`} shape="rect" />
+                <div style={{ position: 'relative', aspectRatio: FRAMES.editorial.css, overflow: 'hidden' }}>
+                  <ImageSlot alt={`${p.title} — key art`} placeholder={`${p.title} — key art`} shape="rect" frame="editorial" sizes="(max-width: 760px) 92vw, (max-width: 1240px) 33vw, 380px" />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 11, padding: 'clamp(20px,2.4vw,30px)' }}>
                   <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(21px,2.4vw,36px)', lineHeight: 1, letterSpacing: '.06em', color: '#ece6da' }}>

@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
-
-type Ratio = '16/9' | '21/9' | '4/5' | '2/3' | '1/1';
+import { FRAMES, frameVars, type FrameName } from '@/content/frames';
 
 type Props = {
   label: string;
@@ -11,7 +10,18 @@ type Props = {
   /** YouTube/Vimeo URL, or any other embeddable URL. Omit while the film isn't live yet. */
   url?: string;
   placeholder?: string;
-  ratio?: Ratio;
+  /** The poster still, once one is uploaded. Cropped to `frame`. */
+  poster?: string;
+  /** The phone poster — a separate upload composed for `mobileFrame`. */
+  mobilePoster?: string;
+  /** Which house frame the poster sits in — see `content/frames.ts`. */
+  frame?: FrameName;
+  /**
+   * Restage the poster for phones. Applies to the poster only: once the visitor
+   * presses play the box snaps back to `frame`, because the embed itself is a
+   * 16:9 video and a taller box would only letterbox it.
+   */
+  mobileFrame?: FrameName;
   note?: string;
 };
 
@@ -29,17 +39,21 @@ function embedUrl(url: string) {
  * page with no film yet still reads as a considered, finished frame rather
  * than an empty player.
  */
-export function VideoFrame({ label, meta = '', url = '', placeholder, ratio = '16/9', note = 'STILL TO COME' }: Props) {
+export function VideoFrame({ label, meta = '', url = '', placeholder, poster, mobilePoster, frame = 'cinematic', mobileFrame, note = 'STILL TO COME' }: Props) {
   const [playing, setPlaying] = useState(false);
   const trimmedUrl = url.trim();
   const isPlaying = playing && !!trimmedUrl;
+  const restaged = !!mobileFrame && !isPlaying;
 
   return (
     <div
+      className={restaged ? 'gs-frame' : undefined}
       style={{
         position: 'relative',
         width: '100%',
-        aspectRatio: ratio,
+        // Inline `aspect-ratio` outranks `.gs-frame`, so the playing box is
+        // pinned to the wide frame even on a phone.
+        ...(restaged ? frameVars(frame, mobileFrame) : { aspectRatio: FRAMES[frame].css }),
         overflow: 'hidden',
         background: '#0a0a0a',
         boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.1)',
@@ -47,7 +61,15 @@ export function VideoFrame({ label, meta = '', url = '', placeholder, ratio = '1
     >
       {!isPlaying && (
         <div style={{ position: 'absolute', inset: 0 }}>
-          <ImageSlot alt={label} placeholder={placeholder || `${label} — poster frame`} shape="rect" />
+          <ImageSlot
+            src={poster}
+            mobileSrc={mobilePoster}
+            alt={label}
+            placeholder={placeholder || `${label} — poster frame`}
+            shape="rect"
+            frame={frame}
+            mobileFrame={mobileFrame}
+          />
         </div>
       )}
 

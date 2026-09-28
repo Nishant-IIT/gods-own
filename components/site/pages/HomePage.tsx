@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { FRAMES } from '@/content/frames';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
@@ -156,7 +157,8 @@ export function HomePage() {
             <VideoFrame
               label="GOD'S OWN — SHOWREEL"
               meta="FILM · SERIES · MUSIC · COMMERCIALS"
-              ratio="21/9"
+              frame="cinematic"
+              mobileFrame="vertical"
               placeholder="SHOWREEL — poster frame (a strong, high-contrast still)"
               note="REEL COMING SOON"
             />
@@ -360,8 +362,8 @@ export function HomePage() {
                 delay={i * 70}
                 style={{ display: 'flex', flexDirection: 'column', background: '#0a0a0a', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.09)' }}
               >
-                <div style={{ position: 'relative', aspectRatio: '3/2', overflow: 'hidden' }}>
-                  <ImageSlot alt={s.ph} placeholder={s.ph} shape="rect" />
+                <div style={{ position: 'relative', aspectRatio: FRAMES.editorial.css, overflow: 'hidden' }}>
+                  <ImageSlot alt={s.ph} placeholder={s.ph} shape="rect" frame="editorial" sizes="(max-width: 760px) 92vw, (max-width: 1240px) 33vw, 380px" />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 'clamp(20px,2.4vw,30px)' }}>
                   <span
@@ -503,8 +505,8 @@ export function HomePage() {
           <Reveal
             style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,260px),1fr))', gap: 'clamp(24px,4vw,56px)', alignItems: 'center' }}
           >
-            <div style={{ aspectRatio: '4/5', maxWidth: 420, width: '100%' }}>
-              <ImageSlot alt="Portrait — Prashant Ingole" placeholder="PORTRAIT — Prashant Ingole" shape="rect" />
+            <div style={{ aspectRatio: FRAMES.portrait.css, maxWidth: 420, width: '100%' }}>
+              <ImageSlot alt="Portrait — Prashant Ingole" placeholder="PORTRAIT — Prashant Ingole" shape="rect" frame="portrait" sizes="(max-width: 760px) 92vw, 420px" />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(16px,2.6vh,26px)' }}>
               <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(26px,3.6vw,56px)', lineHeight: 1, letterSpacing: '.04em', color: '#ece6da' }}>

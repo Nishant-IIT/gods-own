@@ -112,3 +112,23 @@ html {
     animation: none !important;
   }
 }
+
+/*
+ * Responsive image frames. `frameVars()` in content/frames.ts sets the two
+ * custom properties inline; this rule is the only place that can act on them,
+ * because a media query cannot be written in an inline style. A slot with no
+ * `--gs-frame-mobile` keeps one shape at every width.
+ *
+ * The 767px boundary is `MOBILE_MAX` in content/frames.ts — `ImageSlot` gates
+ * its desktop `<source>` on the same number, so the box and the file it holds
+ * always change shape together.
+ */
+.gs-frame {
+  aspect-ratio: var(--gs-frame);
+}
+
+@media (max-width: 767px) {
+  .gs-frame {
+    aspect-ratio: var(--gs-frame-mobile, var(--gs-frame));
+  }
+}

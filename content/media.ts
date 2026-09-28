@@ -1,5 +1,11 @@
 /**
- * TEMPORARY — ImageKit integration check.
+ * ImageKit delivery, plus a TEMPORARY still fallback.
+ *
+ * Delivery is frame-driven: every URL asks ImageKit for the exact pixel box of
+ * one of the six house frames in `content/frames.ts`, so what arrives already
+ * matches the shape the slot is drawn at. Nothing here picks its own size.
+ *
+ * The fallback below is the temporary half.
  *
  * Every `ImageSlot` on the site currently has no real still assigned yet, so
  * rather than shipping empty placeholder frames we deal each slot a screen grab
@@ -9,6 +15,8 @@
  * the page. Once the real per-slot artwork exists, pass an explicit `src` to
  * each `ImageSlot` and delete this fallback.
  */
+
+import { FRAMES, type FrameName } from '@/content/frames';
 
 export const IK_ENDPOINT = 'https://ik.imagekit.io/godsown';
 
@@ -51,9 +59,32 @@ const PORTRAIT = 'Prashant ingole';
  * Builds a delivery URL. `path` is the media-library path with real spaces;
  * each segment is encoded so "Screen Grabs" reaches ImageKit as "Screen%20Grabs".
  */
-export function ikUrl(path: string, tr = 'w-1600,c-maintain_ratio,f-auto,q-72') {
+export function ikUrl(path: string, tr: string) {
   const encoded = path.split('/').map(encodeURIComponent).join('/');
   return `${IK_ENDPOINT}/${encoded}?tr=${tr}`;
+}
+
+/**
+ * Transformation string for a house frame. Naming both `w` and `h` puts
+ * ImageKit in its default `c-maintain_ratio` mode, which scales the source and
+ * centre-crops the overflow — so the delivered file is exactly the frame's
+ * master box whatever shape the original was. Portraits get a little more
+ * quality budget because compression shows on a face.
+ *
+ * No smart-crop focus is applied anywhere. Framing is a decision the artwork
+ * makes, not the CDN: a slot that needs a different composition on a phone gets
+ * a second image cut for it (`mobileSrc` on `ImageSlot`), never an algorithmic
+ * guess at where the subject of the wide one was.
+ */
+export function frameTransform(frame: FrameName) {
+  const { width, height } = FRAMES[frame];
+  const quality = frame === 'portrait' ? 80 : 72;
+  return `w-${width},h-${height},c-maintain_ratio,f-auto,q-${quality}`;
+}
+
+/** Delivery URL for a real media-library path, cropped to one of the frames. */
+export function frameUrl(path: string, frame: FrameName) {
+  return ikUrl(path, frameTransform(frame));
 }
 
 /**
@@ -78,10 +109,11 @@ function hash(key: string) {
 }
 
 /**
- * Deterministic still for a slot label. Portrait slots get the real portrait;
- * everything else gets a screen grab picked by hashing the label.
+ * Deterministic still for a slot label, cropped to the slot's frame. A slot
+ * asking for the `portrait` frame gets the real portrait; everything else gets
+ * a screen grab picked by hashing the label.
  */
-export function stillFor(key: string, tr?: string) {
-  if (/portrait/i.test(key)) return ikUrl(PORTRAIT, tr ?? 'w-1000,c-maintain_ratio,f-auto,q-80');
-  return ikUrl(STILLS[hash(key) % STILLS.length], tr);
+export function stillFor(key: string, frame: FrameName) {
+  if (frame === 'portrait') return frameUrl(PORTRAIT, frame);
+  return frameUrl(STILLS[hash(key) % STILLS.length], frame);
 }

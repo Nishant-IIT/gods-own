@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { FRAMES } from '@/content/frames';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 import { CometCard } from '@/components/ui/comet-card';
 import { PageShell } from '../PageShell';
@@ -65,8 +66,8 @@ function PortraitCard({
           transformStyle: 'preserve-3d',
         }}
       >
-        <div style={{ aspectRatio: '4/5', width: '100%' }}>
-          <ImageSlot src={src} alt={alt} placeholder={placeholder} shape="rect" />
+        <div style={{ aspectRatio: FRAMES.portrait.css, width: '100%' }}>
+          <ImageSlot src={src} alt={alt} placeholder={placeholder} shape="rect" frame="portrait" sizes="(max-width: 760px) 92vw, 430px" />
         </div>
         <div
           style={{

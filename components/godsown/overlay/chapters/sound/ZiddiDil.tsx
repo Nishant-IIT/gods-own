@@ -1,5 +1,6 @@
 'use client';
 
+import { FRAMES } from '@/content/frames';
 import { SONGS } from '@/content/timeline';
 import { useReg } from '../../../lib/refRegistry';
 import { ImageSlot } from '../../ImageSlot';
@@ -21,10 +22,10 @@ export function ZiddiDil() {
           opacity: 0,
           willChange: 'transform,opacity,filter',
           width: 'min(58vw,720px)',
-          aspectRatio: '4/5',
+          aspectRatio: FRAMES.editorial.css,
         }}
       >
-        <ImageSlot alt={song.title} placeholder={song.imagePlaceholder} />
+        <ImageSlot alt={song.title} placeholder={song.imagePlaceholder} frame="editorial" sizes="min(58vw,720px)" />
         <div
           style={{
             position: 'absolute',
