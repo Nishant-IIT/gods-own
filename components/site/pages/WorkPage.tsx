@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { GalleryHero } from '../GalleryHero';
 import { FRAMES, frameVars } from '@/content/frames';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
-import { LogoCloud } from '@/components/ui/logo-clouds';
+import { LogoRibbon } from '@/components/ui/logo-ribbon';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
 import { VideoFrame } from '../VideoFrame';
@@ -213,7 +213,7 @@ export function WorkPage() {
 
       <section style={{ padding: 'clamp(50px,9vh,120px) clamp(20px,5vw,80px)' }}>
         <Reveal style={{ maxWidth: 1180, margin: '0 auto' }}>
-          <LogoCloud />
+          <LogoRibbon />
         </Reveal>
       </section>
 

@@ -132,3 +132,33 @@ html {
     aspect-ratio: var(--gs-frame-mobile, var(--gs-frame));
   }
 }
+
+/*
+ * The brand ribbon (components/ui/logo-ribbon.tsx). Three things that have to
+ * be a rule rather than an inline style: a media query, and two pseudo-element
+ * selectors.
+ *
+ * Normally the strip is clipped and the only motion is the rAF drift, so manual
+ * scrolling is off — the track carries a duplicate run, and letting someone
+ * scroll into it would show the loop's seam. Under reduced motion the drift
+ * never starts (the loop bows out in JS), so the strip becomes scrollable
+ * instead and the duplicate run is dropped, leaving one reachable row.
+ */
+.gs-ribbon {
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.gs-ribbon::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gs-ribbon {
+    overflow-x: auto;
+  }
+
+  .gs-ribbon [data-repeat] {
+    display: none;
+  }
+}
