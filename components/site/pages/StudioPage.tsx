@@ -1,8 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-import { FRAMES } from '@/content/frames';
-import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
 
@@ -174,35 +171,6 @@ export function StudioPage() {
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section style={{ padding: 'clamp(60px,11vh,130px) clamp(20px,5vw,80px) clamp(50px,8vh,90px)' }}>
-        <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(30px,5vh,52px)' }}>
-          <div style={eyebrowMuted}>06 — LEADERSHIP</div>
-          <Reveal
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,240px),1fr))', gap: 'clamp(24px,4vw,56px)', alignItems: 'center' }}
-          >
-            <div style={{ aspectRatio: FRAMES.portrait.css, maxWidth: 380, width: '100%' }}>
-              <ImageSlot alt="Portrait — Prashant Ingole" placeholder="PORTRAIT — Prashant Ingole" shape="rect" frame="portrait" sizes="(max-width: 760px) 92vw, 380px" />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(16px,2.6vh,26px)' }}>
-              <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(24px,3.4vw,50px)', lineHeight: 1, letterSpacing: '.04em', color: '#ece6da' }}>
-                PRASHANT INGOLE
-              </span>
-              <span style={{ fontSize: 'clamp(9px,.78vw,11px)', letterSpacing: '.36em', color: '#d4a05a' }}>FOUNDER / CREATIVE LEAD</span>
-              <span style={{ fontSize: 'clamp(12px,1.05vw,15px)', lineHeight: 1.9, letterSpacing: '.06em', color: '#b3ab9d' }}>
-                Storytelling · Music · Direction · Creative Development
-              </span>
-              <Link
-                href="/work"
-                className="gs-hover-accent"
-                style={{ marginTop: 8, alignSelf: 'flex-start', fontSize: 10, letterSpacing: '.3em', color: '#8f887c', borderBottom: '1px solid rgba(143,136,124,.4)', paddingBottom: 5 }}
-              >
-                SELECTED WORK →
-              </Link>
-            </div>
-          </Reveal>
         </div>
       </section>
     </PageShell>
