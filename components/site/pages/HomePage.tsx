@@ -57,7 +57,6 @@ const DOORS = [
 
 const sectionPad = 'clamp(70px,13vh,150px) clamp(20px,5vw,80px)';
 const eyebrow = { fontSize: 'clamp(9px,.72vw,10px)', letterSpacing: '.46em', textIndent: '.46em', color: '#d4a05a' } as const;
-const eyebrowMuted = { ...eyebrow, color: '#8f887c' };
 const h2Style = {
   margin: 0,
   fontFamily: "'Oswald',sans-serif",
@@ -502,59 +501,11 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 08 PEOPLE */}
-      <section id="people" style={{ padding: sectionPad }}>
-        <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(40px,7vh,76px)' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-            <div style={eyebrow}>08 — PEOPLE</div>
-            <h2 style={h2Style}>THE MAKERS</h2>
-          </div>
-          <Reveal
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,260px),1fr))', gap: 'clamp(24px,4vw,56px)', alignItems: 'center' }}
-          >
-            <div style={{ aspectRatio: FRAMES.portrait.css, maxWidth: 420, width: '100%' }}>
-              <ImageSlot alt="Portrait — Prashant Ingole" placeholder="PORTRAIT — Prashant Ingole" shape="rect" frame="portrait" sizes="(max-width: 760px) 92vw, 420px" />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(16px,2.6vh,26px)' }}>
-              <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(26px,3.6vw,56px)', lineHeight: 1, letterSpacing: '.04em', color: '#ece6da' }}>
-                PRASHANT INGOLE
-              </span>
-              <span style={{ fontSize: 'clamp(9px,.78vw,11px)', letterSpacing: '.36em', color: '#d4a05a' }}>FOUNDER / CREATIVE LEAD</span>
-              <span style={{ fontSize: 'clamp(12px,1.05vw,15px)', lineHeight: 1.9, letterSpacing: '.06em', color: '#b3ab9d' }}>
-                Storytelling · Music · Direction · Creative Development
-              </span>
-            </div>
-          </Reveal>
-          <Reveal
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'clamp(22px,4vh,38px)',
-              paddingTop: 'clamp(24px,4vh,44px)',
-              borderTop: '1px solid rgba(236,230,218,.1)',
-            }}
-          >
-            <span style={eyebrowMuted}>TALENT NETWORK</span>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(14px,2.4vw,34px)', fontFamily: "'Oswald',sans-serif", fontWeight: 200, fontSize: 'clamp(15px,1.9vw,30px)', letterSpacing: '.06em', color: '#ece6da' }}>
-              {['Established Artists', 'Emerging Creators', 'Filmmakers', 'Writers', 'Musicians', 'Technical Talent'].map((t, i, arr) => (
-                <span key={t} style={{ display: 'contents' }}>
-                  <span>{t}</span>
-                  {i < arr.length - 1 && <span style={{ color: '#8f887c' }}>·</span>}
-                </span>
-              ))}
-            </div>
-            <p style={{ ...bodyStyle, maxWidth: '56ch' }}>
-              We collaborate with established voices and discover the next generation of storytellers.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 09 COMMERCIAL ECOSYSTEM */}
+      {/* 08 COMMERCIAL ECOSYSTEM */}
       <section style={{ padding: sectionPad }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,60px)' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-            <div style={eyebrow}>09 — THE MODEL</div>
+            <div style={eyebrow}>08 — THE MODEL</div>
             <h2 style={h2Style}>ONE STORY. MANY PATHS.</h2>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2.4vh,26px)' }}>
@@ -592,11 +543,11 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 10 WHY NOW */}
+      {/* 09 WHY NOW */}
       <section style={{ padding: sectionPad }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,60px)' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-            <div style={eyebrow}>10 — CONTEXT</div>
+            <div style={eyebrow}>09 — CONTEXT</div>
             <h2 style={h2Style}>WHY NOW</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,210px),1fr))', gap: 'clamp(20px,3vw,44px)' }}>
@@ -621,7 +572,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 11 FUTURE */}
+      {/* 10 FUTURE */}
       <section style={{ minHeight: '92vh', display: 'flex', alignItems: 'center', padding: sectionPad }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(36px,6.5vh,70px)' }}>
           <Reveal style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(22px,4vh,38px)' }}>
@@ -656,7 +607,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 12 FINAL CTA */}
+      {/* 11 FINAL CTA */}
       <section id="contact" style={{ padding: 'clamp(70px,13vh,150px) clamp(20px,5vw,80px) clamp(50px,8vh,90px)' }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,62px)' }}>
           <Reveal
