@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { GalleryHero } from '../GalleryHero';
+import { FRAMES, frameVars } from '@/content/frames';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
-import { LogoCloud } from '@/components/ui/logo-clouds';
+import { LogoRibbon } from '@/components/ui/logo-ribbon';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
 import { VideoFrame } from '../VideoFrame';
@@ -112,8 +113,15 @@ export function WorkPage() {
 
       <section style={{ padding: sectionPad }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(26px,4.4vh,48px)' }}>
-          <Reveal style={{ position: 'relative', width: '100%', aspectRatio: '21/9', maxHeight: '62vh' }}>
-            <ImageSlot alt="Bajirao Mastani — still or song artwork" placeholder="BAJIRAO MASTANI — still or song artwork" shape="rect" />
+          <Reveal className="gs-frame" style={{ position: 'relative', width: '100%', ...frameVars('cinematic', 'vertical') }}>
+            <ImageSlot
+              alt="Bajirao Mastani — still or song artwork"
+              placeholder="BAJIRAO MASTANI — still or song artwork"
+              shape="rect"
+              frame="cinematic"
+              mobileFrame="vertical"
+              sizes="(max-width: 1240px) 100vw, 1180px"
+            />
           </Reveal>
           <Reveal style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,260px),1fr))', gap: 'clamp(22px,3.4vw,52px)', alignItems: 'end' }}>
             <h2 style={{ margin: 0, fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(40px,9vw,150px)', lineHeight: 0.94, letterSpacing: '.03em', color: '#ece6da' }}>
@@ -146,8 +154,8 @@ export function WorkPage() {
               </p>
             </div>
           </Reveal>
-          <Reveal delay={90} style={{ aspectRatio: '1', maxWidth: 460, width: '100%', justifySelf: 'end' }}>
-            <ImageSlot alt="Gajanana — still or song artwork" placeholder="GAJANANA — still or song artwork" shape="rect" />
+          <Reveal delay={90} style={{ aspectRatio: FRAMES.square.css, maxWidth: 460, width: '100%', justifySelf: 'end' }}>
+            <ImageSlot alt="Gajanana — still or song artwork" placeholder="GAJANANA — still or song artwork" shape="rect" frame="square" sizes="(max-width: 760px) 92vw, 460px" />
           </Reveal>
         </div>
       </section>
@@ -161,7 +169,7 @@ export function WorkPage() {
             </h2>
           </Reveal>
           <Reveal>
-            <VideoFrame label="BUDH (AWAKENING)" meta="SHORT FILM · WRITER & DIRECTOR" ratio="21/9" placeholder="BUDH (AWAKENING) — poster frame" note="FILM COMING SOON" />
+            <VideoFrame label="BUDH (AWAKENING)" meta="SHORT FILM · WRITER & DIRECTOR" frame="cinematic" mobileFrame="vertical" placeholder="BUDH (AWAKENING) — poster frame" note="FILM COMING SOON" />
           </Reveal>
           <Reveal delay={90}>
             <p style={{ margin: 0, maxWidth: '56ch', fontSize: 'clamp(13px,1.1vw,16px)', lineHeight: 1.75, color: '#b3ab9d', textWrap: 'pretty' }}>
@@ -205,7 +213,7 @@ export function WorkPage() {
 
       <section style={{ padding: 'clamp(50px,9vh,120px) clamp(20px,5vw,80px)' }}>
         <Reveal style={{ maxWidth: 1180, margin: '0 auto' }}>
-          <LogoCloud />
+          <LogoRibbon />
         </Reveal>
       </section>
 

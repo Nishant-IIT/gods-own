@@ -1,5 +1,6 @@
 'use client';
 
+import { FRAMES } from '@/content/frames';
 import { SONGS } from '@/content/timeline';
 import { useReg } from '../../../lib/refRegistry';
 import { ImageSlot } from '../../ImageSlot';
@@ -21,10 +22,10 @@ export function Gajanana() {
           opacity: 0,
           willChange: 'transform,opacity,filter',
           width: 'min(84vw,1140px)',
-          aspectRatio: '21/9',
+          aspectRatio: FRAMES.cinematic.css,
         }}
       >
-        <ImageSlot alt={song.title} placeholder={song.imagePlaceholder} />
+        <ImageSlot alt={song.title} placeholder={song.imagePlaceholder} frame="cinematic" sizes="min(84vw,1140px)" />
         <div
           style={{
             position: 'absolute',

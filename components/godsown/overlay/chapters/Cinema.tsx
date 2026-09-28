@@ -1,5 +1,6 @@
 'use client';
 
+import { FRAMES } from '@/content/frames';
 import { CINEMA } from '@/content/timeline';
 import { useReg } from '../../lib/refRegistry';
 import { ImageSlot } from '../ImageSlot';
@@ -107,10 +108,10 @@ export function Cinema() {
           opacity: 0,
           willChange: 'transform,opacity,filter',
           width: 'min(72vw,880px)',
-          aspectRatio: '2.39/1',
+          aspectRatio: FRAMES.cinematic.css,
         }}
       >
-        <ImageSlot alt={CINEMA.title} placeholder={CINEMA.imagePlaceholder} />
+        <ImageSlot alt={CINEMA.title} placeholder={CINEMA.imagePlaceholder} frame="cinematic" sizes="min(72vw,880px)" />
         <span
           style={{
             position: 'absolute',

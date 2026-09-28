@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
+import { FRAMES } from '@/content/frames';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 
 type CarouselItem = { title: string; status: string; href: string; ph?: string };
@@ -249,7 +250,7 @@ export function PosterCarousel({ items, radius = 560, autoRotate = 0.035 }: Prop
               left: '50%',
               top: '50%',
               width: CARD_W,
-              aspectRatio: '2/3',
+              aspectRatio: FRAMES.poster.css,
               marginLeft: `calc(${CARD_W} / -2)`,
               marginTop: `calc(${CARD_W} * 1.5 / -2)`,
               color: '#ece6da',
@@ -266,7 +267,14 @@ export function PosterCarousel({ items, radius = 560, autoRotate = 0.035 }: Prop
                 boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.14), 0 24px 60px rgba(0,0,0,.6)',
               }}
             >
-              <ImageSlot alt={c.title} placeholder={c.ph || `${c.title} — poster (2:3)`} shape="rect" style={{ position: 'absolute', inset: 0 }} />
+              <ImageSlot
+                alt={c.title}
+                placeholder={c.ph || `${c.title} — poster (2:3)`}
+                shape="rect"
+                frame="poster"
+                sizes={CARD_W}
+                style={{ position: 'absolute', inset: 0 }}
+              />
               <div
                 style={{
                   position: 'absolute',

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { FRAMES } from '@/content/frames';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
@@ -182,8 +183,8 @@ export function StudioPage() {
           <Reveal
             style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,240px),1fr))', gap: 'clamp(24px,4vw,56px)', alignItems: 'center' }}
           >
-            <div style={{ aspectRatio: '4/5', maxWidth: 380, width: '100%' }}>
-              <ImageSlot alt="Portrait — Prashant Ingole" placeholder="PORTRAIT — Prashant Ingole" shape="rect" />
+            <div style={{ aspectRatio: FRAMES.portrait.css, maxWidth: 380, width: '100%' }}>
+              <ImageSlot alt="Portrait — Prashant Ingole" placeholder="PORTRAIT — Prashant Ingole" shape="rect" frame="portrait" sizes="(max-width: 760px) 92vw, 380px" />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(16px,2.6vh,26px)' }}>
               <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(24px,3.4vw,50px)', lineHeight: 1, letterSpacing: '.04em', color: '#ece6da' }}>

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import type { SlateProject } from '../data/slateProjects';
+import { FRAMES, frameVars } from '@/content/frames';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
@@ -23,8 +24,17 @@ export function SlateDetailPage({ project }: { project: SlateProject }) {
           <Link href="/slate" className="gs-hover-accent" style={{ alignSelf: 'flex-start', fontSize: 9, letterSpacing: '.3em', color: '#8f887c' }}>
             ← THE SLATE
           </Link>
-          <div style={{ position: 'relative', width: '100%', aspectRatio: '21/9', maxHeight: '54vh' }}>
-            <ImageSlot alt={`${project.title} — key art`} placeholder={`${project.title} — key art`} shape="rect" />
+          <div className="gs-frame" style={{ position: 'relative', width: '100%', ...frameVars('cinematic', 'vertical') }}>
+            <ImageSlot
+              src={project.keyArt?.wide}
+              mobileSrc={project.keyArt?.phone}
+              alt={`${project.title} — key art`}
+              placeholder={`${project.title} — key art`}
+              shape="rect"
+              frame="cinematic"
+              mobileFrame="vertical"
+              sizes="(max-width: 1240px) 100vw, 1180px"
+            />
           </div>
         </Reveal>
         <Reveal
@@ -70,14 +80,14 @@ export function SlateDetailPage({ project }: { project: SlateProject }) {
 
       <section style={{ padding: 'clamp(40px,8vh,110px) clamp(20px,5vw,80px)' }}>
         <Reveal style={{ maxWidth: 1180, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,260px),1fr))', gap: 'clamp(14px,2vw,26px)' }}>
-          <div style={{ aspectRatio: '4/5' }}>
-            <ImageSlot alt={`${project.title} — look reference 1`} placeholder={`${project.title} — look reference 1`} shape="rect" />
+          <div style={{ aspectRatio: FRAMES.editorial.css }}>
+            <ImageSlot alt={`${project.title} — look reference 1`} placeholder={`${project.title} — look reference 1`} shape="rect" frame="editorial" sizes="(max-width: 760px) 92vw, (max-width: 1240px) 33vw, 380px" />
           </div>
-          <div style={{ aspectRatio: '4/5' }}>
-            <ImageSlot alt={`${project.title} — look reference 2`} placeholder={`${project.title} — look reference 2`} shape="rect" />
+          <div style={{ aspectRatio: FRAMES.editorial.css }}>
+            <ImageSlot alt={`${project.title} — look reference 2`} placeholder={`${project.title} — look reference 2`} shape="rect" frame="editorial" sizes="(max-width: 760px) 92vw, (max-width: 1240px) 33vw, 380px" />
           </div>
-          <div style={{ aspectRatio: '4/5' }}>
-            <ImageSlot alt={`${project.title} — look reference 3`} placeholder={`${project.title} — look reference 3`} shape="rect" />
+          <div style={{ aspectRatio: FRAMES.editorial.css }}>
+            <ImageSlot alt={`${project.title} — look reference 3`} placeholder={`${project.title} — look reference 3`} shape="rect" frame="editorial" sizes="(max-width: 760px) 92vw, (max-width: 1240px) 33vw, 380px" />
           </div>
         </Reveal>
       </section>
