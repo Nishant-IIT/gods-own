@@ -233,13 +233,13 @@ export function WorkPage() {
             >
               VIEW THE SLATE
             </Link>
-            <a
-              href="mailto:hello@godsownmotionpictures.com?subject=Co-production%20enquiry"
+            <Link
+              href="/contact?subject=Co-production%20enquiry"
               className="gs-hover-outline"
               style={{ padding: '15px clamp(20px,2.6vw,34px)', fontSize: 10, letterSpacing: '.3em', color: '#ece6da', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.28)' }}
             >
               START A CONVERSATION
-            </a>
+            </Link>
           </Reveal>
         </div>
       </section>

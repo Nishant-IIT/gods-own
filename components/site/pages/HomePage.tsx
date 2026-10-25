@@ -617,7 +617,11 @@ export function HomePage() {
                 <Reveal
                   key={d.title}
                   as="a"
-                  href={`mailto:hello@godsownmotionpictures.com?subject=${encodeURIComponent(d.subject)}`}
+                  href={
+                    d.cta.startsWith('START A CONVERSATION')
+                      ? `/contact?subject=${encodeURIComponent(d.subject)}`
+                      : `mailto:hello@godsownmotionpictures.com?subject=${encodeURIComponent(d.subject)}`
+                  }
                   delay={i * 70}
                   className="gs-hover-void"
                   style={{

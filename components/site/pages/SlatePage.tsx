@@ -109,13 +109,13 @@ export function SlatePage() {
             EVERY PROJECT IS OPEN TO THE RIGHT PARTNER.
           </Reveal>
           <Reveal style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(12px,1.6vw,20px)' }}>
-            <a
-              href="mailto:hello@godsownmotionpictures.com?subject=Investment%20enquiry"
+            <Link
+              href="/contact?subject=Investment%20enquiry"
               className="gs-hover-fill"
               style={{ padding: '15px clamp(20px,2.6vw,34px)', fontSize: 10, letterSpacing: '.3em', color: '#000', background: '#ece6da' }}
             >
               START A CONVERSATION
-            </a>
+            </Link>
           </Reveal>
         </div>
       </section>

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useState, type SubmitEvent } from 'react';
 import { LocationMap } from '@/components/ui/location-map';
 import { PageShell } from '../PageShell';
@@ -31,6 +32,8 @@ const FIELDS: { key: keyof FormState; label: string; type: string; required: boo
 ];
 
 export function ContactPage() {
+  const subject = useSearchParams().get('subject');
+
   return (
     <PageShell footer={<ContactFooter />}>
       <section style={{ minHeight: '36vh', display: 'flex', alignItems: 'flex-end', padding: 'clamp(90px,10vh,110px) clamp(20px,5vw,80px) clamp(40px,7vh,80px)' }}>
@@ -64,7 +67,7 @@ export function ContactPage() {
           }}
         >
           <Reveal>
-            <ContactForm />
+            <ContactForm subject={subject} />
           </Reveal>
           <Reveal delay={80} style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(30px,5vh,48px)' }}>
             <div
@@ -117,19 +120,22 @@ export function ContactPage() {
   );
 }
 
-function ContactForm() {
+function ContactForm({ subject }: { subject: string | null }) {
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [sent, setSent] = useState(false);
 
   function handleSubmit(e: SubmitEvent) {
     e.preventDefault();
     const body = [`Name: ${form.name}`, `Company: ${form.company}`, `Email: ${form.email}`, `Phone: ${form.phone}`].join('\n');
-    window.location.href = `mailto:${MAIL}?subject=${encodeURIComponent('Website enquiry')}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${MAIL}?subject=${encodeURIComponent(subject || 'Website enquiry')}&body=${encodeURIComponent(body)}`;
     setSent(true);
   }
 
   return (
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(24px,3.4vh,36px)' }}>
+      {subject && (
+        <span style={{ fontSize: 9, letterSpacing: '.36em', color: '#d4a05a' }}>RE: {subject.toUpperCase()}</span>
+      )}
       {FIELDS.map((f) => (
         <label key={f.key} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <span style={{ fontSize: 9, letterSpacing: '.36em', color: '#8f887c' }}>
