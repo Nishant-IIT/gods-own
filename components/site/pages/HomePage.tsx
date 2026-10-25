@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { FRAMES } from '@/content/frames';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 import { LogoRibbon } from '@/components/ui/logo-ribbon';
+import { SLATE_PROJECTS } from '../data/slateProjects';
 import { HeroPreloader } from '../HeroPreloader';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
@@ -17,12 +18,6 @@ const ENGINE = [
 ];
 
 const IP_CHAIN = ['IDEA', 'WORLD', 'CHARACTERS', 'CONTENT', 'AUDIENCE', 'DISTRIBUTION', 'IP', 'NEW STORIES'];
-
-const SLATE_PREVIEW = [
-  { title: 'ORION', format: 'Feature Film · Sci-Fi / Thriller', status: 'IN DEVELOPMENT', ph: 'ORION — key art' },
-  { title: 'RAGA', format: 'Limited Series · Musical Drama', status: 'SCRIPT DEVELOPMENT', ph: 'RAGA — key art' },
-  { title: 'ARYA', format: 'Series · Fantasy / Adventure', status: 'EARLY DEVELOPMENT', ph: 'ARYA — key art' },
-];
 
 const CREDITS = [
   { title: 'MALHARI', film: 'BAJIRAO MASTANI', year: '2015' },
@@ -352,31 +347,33 @@ export function HomePage() {
               </Link>
             </Reveal>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,290px),1fr))', gap: 'clamp(18px,2.4vw,32px)' }}>
-              {SLATE_PREVIEW.map((s, i) => (
-                <Reveal
-                  key={s.title}
-                  delay={i * 70}
-                  style={{ display: 'flex', flexDirection: 'column', background: '#0a0a0a', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.09)' }}
-                >
-                  <div style={{ position: 'relative', aspectRatio: FRAMES.editorial.css, overflow: 'hidden' }}>
-                    <ImageSlot alt={s.ph} placeholder={s.ph} shape="rect" frame="editorial" sizes="(max-width: 760px) 92vw, (max-width: 1240px) 33vw, 380px" />
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 'clamp(20px,2.4vw,30px)' }}>
-                    <span
-                      style={{
-                        fontFamily: "'Oswald',sans-serif",
-                        fontWeight: 300,
-                        fontSize: 'clamp(22px,2.6vw,40px)',
-                        lineHeight: 1,
-                        letterSpacing: '.06em',
-                        color: '#ece6da',
-                      }}
-                    >
-                      {s.title}
-                    </span>
-                    <span style={{ fontSize: 'clamp(11px,.9vw,13px)', letterSpacing: '.06em', color: '#b3ab9d' }}>{s.format}</span>
-                    <span style={{ fontSize: 9, letterSpacing: '.3em', color: '#d4a05a', marginTop: 6 }}>{s.status}</span>
-                  </div>
+              {SLATE_PROJECTS.map((p, i) => (
+                <Reveal key={p.slug} delay={i * 70}>
+                  <Link
+                    href={`/slate/${p.slug}`}
+                    className="gs-hover-card"
+                    style={{ display: 'flex', flexDirection: 'column', background: '#0a0a0a', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.09)', color: '#ece6da', textDecoration: 'none' }}
+                  >
+                    <div style={{ position: 'relative', aspectRatio: FRAMES.editorial.css, overflow: 'hidden' }}>
+                      <ImageSlot alt={`${p.title} — key art`} placeholder={`${p.title} — key art`} shape="rect" frame="editorial" sizes="(max-width: 760px) 92vw, (max-width: 1240px) 33vw, 380px" />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 'clamp(20px,2.4vw,30px)' }}>
+                      <span
+                        style={{
+                          fontFamily: "'Oswald',sans-serif",
+                          fontWeight: 300,
+                          fontSize: 'clamp(22px,2.6vw,40px)',
+                          lineHeight: 1,
+                          letterSpacing: '.06em',
+                          color: '#ece6da',
+                        }}
+                      >
+                        {p.title}
+                      </span>
+                      <span style={{ fontSize: 'clamp(11px,.9vw,13px)', letterSpacing: '.06em', color: '#b3ab9d' }}>{p.format}</span>
+                      <span style={{ fontSize: 9, letterSpacing: '.3em', color: '#d4a05a', marginTop: 6 }}>{p.status}</span>
+                    </div>
+                  </Link>
                 </Reveal>
               ))}
             </div>

@@ -73,7 +73,7 @@ export function SlatePage() {
               {String(shown.length).padStart(2, '0')} / {String(SLATE_PROJECTS.length).padStart(2, '0')}
             </span>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,290px),1fr))', gap: 'clamp(18px,2.6vw,34px)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,290px),1fr))', gap: 'clamp(18px,2.6vw,34px)' }}>
             {shown.map((p) => (
               <Link
                 key={p.slug}
@@ -84,12 +84,40 @@ export function SlatePage() {
                 <div style={{ position: 'relative', aspectRatio: FRAMES.editorial.css, overflow: 'hidden' }}>
                   <ImageSlot alt={`${p.title} — key art`} placeholder={`${p.title} — key art`} shape="rect" frame="editorial" sizes="(max-width: 760px) 92vw, (max-width: 1240px) 33vw, 380px" />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 11, padding: 'clamp(20px,2.4vw,30px)' }}>
-                  <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(21px,2.4vw,36px)', lineHeight: 1, letterSpacing: '.06em', color: '#ece6da' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', flex: 1, gap: 11, padding: 'clamp(20px,2.4vw,30px)' }}>
+                  <span
+                    style={{
+                      display: '-webkit-box',
+                      WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 2,
+                      overflow: 'hidden',
+                      minHeight: '2em',
+                      fontFamily: "'Oswald',sans-serif",
+                      fontWeight: 300,
+                      fontSize: 'clamp(21px,2.4vw,36px)',
+                      lineHeight: 1,
+                      letterSpacing: '.06em',
+                      color: '#ece6da',
+                    }}
+                  >
                     {p.title}
                   </span>
-                  <span style={{ fontSize: 'clamp(11px,.9vw,13px)', letterSpacing: '.05em', color: '#b3ab9d' }}>{p.format}</span>
-                  <span style={{ marginTop: 6, fontSize: 9, letterSpacing: '.3em', color: '#d4a05a' }}>{p.status}</span>
+                  <span
+                    style={{
+                      display: '-webkit-box',
+                      WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 1,
+                      overflow: 'hidden',
+                      minHeight: '1.4em',
+                      fontSize: 'clamp(11px,.9vw,13px)',
+                      lineHeight: 1.4,
+                      letterSpacing: '.05em',
+                      color: '#b3ab9d',
+                    }}
+                  >
+                    {p.format}
+                  </span>
+                  <span style={{ marginTop: 'auto', fontSize: 9, letterSpacing: '.3em', color: '#d4a05a' }}>{p.status}</span>
                 </div>
               </Link>
             ))}
