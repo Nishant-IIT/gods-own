@@ -6,7 +6,6 @@ import { SLATE_PROJECTS, type SlateCategory } from '../data/slateProjects';
 import { FRAMES } from '@/content/frames';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 import { PageShell } from '../PageShell';
-import { PosterCarousel } from '../PosterCarousel';
 import { Reveal } from '../Reveal';
 
 const FILTERS = ['ALL', 'FILM', 'SERIES', 'MUSIC', 'DIGITAL', 'ORIGINAL IP'] as const;
@@ -41,29 +40,6 @@ export function SlatePage() {
             </p>
           </Reveal>
         </div>
-      </section>
-
-      <section style={{ padding: 'clamp(10px,2vh,30px) 0 clamp(30px,5vh,70px)' }}>
-        <Reveal style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2.4vh,26px)' }}>
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'baseline',
-              justifyContent: 'space-between',
-              gap: 16,
-              padding: '0 clamp(20px,5vw,80px)',
-              maxWidth: 1320,
-              margin: '0 auto',
-              width: '100%',
-              boxSizing: 'border-box',
-            }}
-          >
-            <span style={{ fontSize: 'clamp(9px,.72vw,10px)', letterSpacing: '.46em', textIndent: '.46em', color: '#8f887c' }}>IN DEVELOPMENT</span>
-            <span style={{ fontFamily: 'ui-monospace,Menlo,monospace', fontSize: 10, letterSpacing: '.16em', color: '#8f887c' }}>DRAG TO TURN</span>
-          </div>
-          <PosterCarousel items={SLATE_PROJECTS.map((p) => ({ title: p.title, status: p.status, href: `/slate/${p.slug}` }))} />
-        </Reveal>
       </section>
 
       <section style={{ padding: 'clamp(20px,4vh,50px) clamp(20px,5vw,80px) clamp(60px,11vh,130px)' }}>
@@ -133,19 +109,12 @@ export function SlatePage() {
             EVERY PROJECT IS OPEN TO THE RIGHT PARTNER.
           </Reveal>
           <Reveal style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(12px,1.6vw,20px)' }}>
-            <a
-              href="mailto:hello@godsownmotionpictures.com?subject=Investment%20enquiry"
+            <Link
+              href="/contact?subject=Investment%20enquiry"
               className="gs-hover-fill"
               style={{ padding: '15px clamp(20px,2.6vw,34px)', fontSize: 10, letterSpacing: '.3em', color: '#000', background: '#ece6da' }}
             >
               START A CONVERSATION
-            </a>
-            <Link
-              href="/ip"
-              className="gs-hover-outline"
-              style={{ padding: '15px clamp(20px,2.6vw,34px)', fontSize: 10, letterSpacing: '.3em', color: '#ece6da', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.28)' }}
-            >
-              THE IP ENGINE
             </Link>
           </Reveal>
         </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import NextLink from 'next/link';
 import { useEffect, useRef, type CSSProperties, type ReactNode, type Ref } from 'react';
 
 type Tag = 'div' | 'h1' | 'h2' | 'a';
@@ -61,6 +62,13 @@ export function Reveal({ children, as = 'div', delay = 0, className, style, href
         </h2>
       );
     case 'a':
+      if (href?.startsWith('/')) {
+        return (
+          <NextLink ref={ref as Ref<HTMLAnchorElement>} href={href} className={className} style={style}>
+            {children}
+          </NextLink>
+        );
+      }
       return (
         <a ref={ref as Ref<HTMLAnchorElement>} href={href} className={className} style={style}>
           {children}
