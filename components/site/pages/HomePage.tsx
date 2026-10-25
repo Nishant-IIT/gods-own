@@ -115,13 +115,6 @@ export function HomePage() {
         </Reveal>
         <Reveal delay={160} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 'clamp(12px,1.6vw,20px)' }}>
           <Link
-            href="/studio"
-            className="gs-hover-fill"
-            style={{ padding: '15px clamp(20px,2.6vw,34px)', fontSize: 10, letterSpacing: '.3em', color: '#000', background: '#ece6da' }}
-          >
-            EXPLORE THE STUDIO
-          </Link>
-          <Link
             href="/slate"
             className="gs-hover-outline"
             style={{
