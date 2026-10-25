@@ -12,6 +12,13 @@ const GRAIN_URL =
 type Phase = 'visible' | 'exiting' | 'done';
 
 /**
+ * Module-level, not state: survives remounts from client-side navigation
+ * (e.g. clicking HOME from another page) since the module stays loaded, but
+ * resets on an actual browser refresh/new page load, which re-evaluates it.
+ */
+let hasPlayedThisLoad = false;
+
+/**
  * A handful of CSS radial-gradient dots, cheap to paint and composited for
  * free with the slide transition — stands in for the real `<Universe/>`
  * starfield without a second WebGL canvas competing for frames during the
@@ -30,18 +37,25 @@ function buildStarfield(count: number) {
 }
 
 /**
- * Full-screen studio vanity card shown on every HomePage mount: the wordmark
+ * Full-screen studio vanity card shown once per page load: the wordmark
  * racks into focus from a tight, blurred kerning, a gold line draws out
  * beneath it, then the whole card holds before sliding up to reveal the live
- * hero. Skipped entirely under prefers-reduced-motion rather than forcing a
- * timed wait on those users.
+ * hero. Does not replay on client-side navigation back to HOME — only on an
+ * actual refresh/new load. Skipped entirely under prefers-reduced-motion
+ * rather than forcing a timed wait on those users.
  */
 export function HeroPreloader() {
   const [phase, setPhase] = useState<Phase>(() =>
-    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'done' : 'visible',
+    hasPlayedThisLoad || (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+      ? 'done'
+      : 'visible',
   );
   const [entered, setEntered] = useState(false);
   const starfield = useMemo(() => buildStarfield(STAR_COUNT), []);
+
+  useEffect(() => {
+    if (phase === 'visible') hasPlayedThisLoad = true;
+  }, [phase]);
 
   useEffect(() => {
     if (phase !== 'visible') return;
