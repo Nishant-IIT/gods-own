@@ -18,4 +18,8 @@ export const SlateDetailPageLoader = dynamic(
   () => import('./SlateDetailPage').then((m) => m.SlateDetailPage),
   { ssr: false },
 );
+export const WorkDetailPageLoader = dynamic(
+  () => import('./WorkDetailPage').then((m) => m.WorkDetailPage),
+  { ssr: false },
+);
 export const ExperienceLoader = dynamic(() => import('@/components/godsown/Experience'), { ssr: false });

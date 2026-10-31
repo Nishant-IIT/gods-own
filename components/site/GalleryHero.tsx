@@ -210,22 +210,6 @@ export function GalleryHero({ eyebrow = 'PROOF', title = 'SELECTED WORK', sub = 
                 sizes={CELL_SIZES[i]}
                 style={{ position: 'absolute', inset: 0 }}
               />
-              <span
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  padding: 'clamp(10px,1.2vw,18px)',
-                  background: 'linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.78))',
-                  fontSize: 'clamp(8px,.68vw,10px)',
-                  letterSpacing: '.26em',
-                  color: '#b3ab9d',
-                  pointerEvents: 'none',
-                }}
-              >
-                {c.label}
-              </span>
             </div>
           ))}
         </div>
