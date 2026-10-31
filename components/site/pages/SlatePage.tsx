@@ -3,8 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { SLATE_PROJECTS, type SlateCategory } from '../data/slateProjects';
-import { FRAMES } from '@/content/frames';
-import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
+import { Card } from '@/components/ui/card';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
 
@@ -73,52 +72,10 @@ export function SlatePage() {
               {String(shown.length).padStart(2, '0')} / {String(SLATE_PROJECTS.length).padStart(2, '0')}
             </span>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,290px),1fr))', gap: 'clamp(18px,2.6vw,34px)' }}>
+          <div style={{ display: 'grid', justifyContent: 'center', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,460px),560px))', gap: 'clamp(24px,4vw,48px)', perspective: 1000 }}>
             {shown.map((p) => (
-              <Link
-                key={p.slug}
-                href={`/slate/${p.slug}`}
-                className="gs-hover-card"
-                style={{ display: 'flex', flexDirection: 'column', background: '#0a0a0a', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.09)', color: '#ece6da', textDecoration: 'none' }}
-              >
-                <div style={{ position: 'relative', aspectRatio: FRAMES.editorial.css, overflow: 'hidden' }}>
-                  <ImageSlot alt={`${p.title} — key art`} placeholder={`${p.title} — key art`} shape="rect" frame="editorial" sizes="(max-width: 760px) 92vw, (max-width: 1240px) 33vw, 380px" />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', flex: 1, gap: 11, padding: 'clamp(20px,2.4vw,30px)' }}>
-                  <span
-                    style={{
-                      display: '-webkit-box',
-                      WebkitBoxOrient: 'vertical',
-                      WebkitLineClamp: 2,
-                      overflow: 'hidden',
-                      minHeight: '2em',
-                      fontFamily: "'Oswald',sans-serif",
-                      fontWeight: 300,
-                      fontSize: 'clamp(21px,2.4vw,36px)',
-                      lineHeight: 1,
-                      letterSpacing: '.06em',
-                      color: '#ece6da',
-                    }}
-                  >
-                    {p.title}
-                  </span>
-                  <span
-                    style={{
-                      display: '-webkit-box',
-                      WebkitBoxOrient: 'vertical',
-                      WebkitLineClamp: 1,
-                      overflow: 'hidden',
-                      minHeight: '1.4em',
-                      fontSize: 'clamp(11px,.9vw,13px)',
-                      lineHeight: 1.4,
-                      letterSpacing: '.05em',
-                      color: '#b3ab9d',
-                    }}
-                  >
-                    {p.format}
-                  </span>
-                  <span style={{ marginTop: 'auto', fontSize: 9, letterSpacing: '.3em', color: '#d4a05a' }}>{p.status}</span>
-                </div>
+              <Link key={p.slug} href={`/slate/${p.slug}`} style={{ display: 'block', textDecoration: 'none' }}>
+                <Card title={p.title} description={p.format} imageUrl={`https://picsum.photos/seed/${encodeURIComponent(p.slug)}/1600/900`} />
               </Link>
             ))}
           </div>
