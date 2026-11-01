@@ -2,16 +2,25 @@
 
 import Link from 'next/link';
 import { LogoRibbon } from '@/components/ui/logo-ribbon';
+import { stillFor } from '@/content/media';
 import { SLATE_PROJECTS } from '../data/slateProjects';
 import { HeroPreloader } from '../HeroPreloader';
 import { NetflixCarousel } from '../NetflixCarousel';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
+import { ScrollLockedDeck } from '../ScrollLockedDeck';
 
 const SHOWREEL_SLIDES = SLATE_PROJECTS.map((p) => ({
   title: p.title,
   meta: p.format.toUpperCase(),
   placeholder: `${p.title} — showreel still`,
+}));
+
+const DECK_SLIDES = SLATE_PROJECTS.map((p) => ({
+  image: stillFor(`${p.title} — key art`, 'poster'),
+  title: p.title,
+  caption: `${p.format} — ${p.status}`,
+  alt: `${p.title} — key art`,
 }));
 
 const CREDITS = [
@@ -134,11 +143,33 @@ export function HomePage() {
           </div>
         </section>
   
-        {/* 03 THE AUDIENCE */}
+        {/* 03 THE SLATE */}
+        <section id="slate">
+          <div style={{ maxWidth: 1180, margin: '0 auto', padding: sectionPad, paddingBottom: 0 }}>
+            <Reveal
+              style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 24 }}
+            >
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+                <div style={eyebrow}>03 — THE SLATE</div>
+                <h2 style={h2Style}>STORIES IN MOTION</h2>
+              </div>
+              <Link
+                href="/slate"
+                className="gs-hover-accent"
+                style={{ fontSize: 10, letterSpacing: '.3em', color: '#8f887c', borderBottom: '1px solid rgba(143,136,124,.4)', paddingBottom: 5 }}
+              >
+                VIEW FULL SLATE →
+              </Link>
+            </Reveal>
+          </div>
+          <ScrollLockedDeck slides={DECK_SLIDES} background="transparent" ink="#ece6da" aspect="2 / 3" cardWidth="min(86vw, 560px)" />
+        </section>
+
+        {/* 04 THE AUDIENCE */}
         <section id="audience" style={{ padding: sectionPad }}>
           <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,62px)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <div style={eyebrow}>03 — THE AUDIENCE</div>
+              <div style={eyebrow}>04 — THE AUDIENCE</div>
               <h2 style={h2Style}>STORIES WITHOUT BORDERS</h2>
             </div>
             <Reveal
@@ -195,11 +226,11 @@ export function HomePage() {
           </div>
         </section>
   
-        {/* 04 PROOF */}
+        {/* 05 PROOF */}
         <section id="work" style={{ padding: sectionPad }}>
           <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,60px)' }}>
             <Reveal style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <div style={eyebrow}>04 — PROOF</div>
+              <div style={eyebrow}>05 — PROOF</div>
               <h2 style={h2Style}>BUILT ON EXPERIENCE.</h2>
               <p style={{ ...bodyStyle, maxWidth: '56ch' }}>
                 Selected credits written by the studio&apos;s founding creative lead across Hindi film and music.
@@ -239,11 +270,11 @@ export function HomePage() {
           </div>
         </section>
 
-        {/* 05 COMMERCIAL ECOSYSTEM */}
+        {/* 06 COMMERCIAL ECOSYSTEM */}
         <section style={{ padding: sectionPad }}>
           <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,60px)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <div style={eyebrow}>05 — THE MODEL</div>
+              <div style={eyebrow}>06 — THE MODEL</div>
               <h2 style={h2Style}>ONE STORY. MANY PATHS.</h2>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2.4vh,26px)' }}>
@@ -281,11 +312,11 @@ export function HomePage() {
           </div>
         </section>
   
-        {/* 06 WHY NOW */}
+        {/* 07 WHY NOW */}
         <section style={{ padding: sectionPad }}>
           <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,60px)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <div style={eyebrow}>06 — CONTEXT</div>
+              <div style={eyebrow}>07 — CONTEXT</div>
               <h2 style={h2Style}>WHY NOW</h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,210px),1fr))', gap: 'clamp(20px,3vw,44px)' }}>
@@ -310,7 +341,7 @@ export function HomePage() {
           </div>
         </section>
   
-        {/* 07 FUTURE */}
+        {/* 08 FUTURE */}
         <section style={{ minHeight: '92vh', display: 'flex', alignItems: 'center', padding: sectionPad }}>
           <div style={{ maxWidth: 1180, margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(36px,6.5vh,70px)' }}>
             <Reveal style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(22px,4vh,38px)' }}>
@@ -345,7 +376,7 @@ export function HomePage() {
           </div>
         </section>
   
-        {/* 08 FINAL CTA */}
+        {/* 09 FINAL CTA */}
         <section id="contact" style={{ padding: 'clamp(70px,13vh,150px) clamp(20px,5vw,80px) clamp(50px,8vh,90px)' }}>
           <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,62px)' }}>
             <Reveal
