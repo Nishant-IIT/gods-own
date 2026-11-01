@@ -9,12 +9,12 @@ import { PosterCarousel } from '../PosterCarousel';
 import { Reveal } from '../Reveal';
 
 const PRASHANT_WORK = [
-  { title: 'BAJIRAO MASTANI', status: 'FEATURE FILM', href: '/work' },
-  { title: 'MARY KOM', status: 'FEATURE FILM', href: '/work' },
-  { title: 'RACE 2', status: 'FEATURE FILM', href: '/work' },
-  { title: '83', status: 'FEATURE FILM', href: '/work' },
-  { title: 'JALEBI', status: 'FEATURE FILM', href: '/work' },
-  { title: 'BUDH (AWAKENING)', status: 'SHORT FILM', href: '/work' },
+  { title: 'BAJIRAO MASTANI', status: 'FEATURE FILM' },
+  { title: 'MARY KOM', status: 'FEATURE FILM' },
+  { title: 'RACE 2', status: 'FEATURE FILM' },
+  { title: '83', status: 'FEATURE FILM' },
+  { title: 'JALEBI', status: 'FEATURE FILM' },
+  { title: 'BUDH (AWAKENING)', status: 'SHORT FILM' },
 ];
 
 const PRASHANT_BIO = [
@@ -87,6 +87,115 @@ function PortraitCard({
         </div>
       </div>
     </CometCard>
+  );
+}
+
+/**
+ * Instagram, YouTube, Spotify and Apple Music, in their real brand colors —
+ * same treatment as the site footer. Spotify and Apple Music are optional:
+ * only a musician's profile needs them. `id` namespaces each instance's
+ * gradient defs so multiple profiles on one page don't fight over the same
+ * `<linearGradient id>`.
+ */
+function SocialIcons({
+  id,
+  instagram,
+  youtube,
+  spotify,
+  appleMusic,
+}: {
+  id: string;
+  instagram: string;
+  youtube: string;
+  spotify?: string;
+  appleMusic?: string;
+}) {
+  const gradientId = `gsPeopleIgGradient-${id}`;
+  const amGradientId = `gsPeopleAmGradient-${id}`;
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+      <a
+        href={instagram}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram"
+        className="gs-hover-lift"
+        style={{ display: 'inline-flex', width: 22, height: 22, transition: 'transform .25s ease' }}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden style={{ width: '100%', height: '100%' }}>
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#feda75" />
+              <stop offset="30%" stopColor="#fa7e1e" />
+              <stop offset="55%" stopColor="#d62976" />
+              <stop offset="80%" stopColor="#962fbf" />
+              <stop offset="100%" stopColor="#4f5bd5" />
+            </linearGradient>
+          </defs>
+          <rect x={1.5} y={1.5} width={21} height={21} rx={6} fill={`url(#${gradientId})`} />
+          <rect x={6.3} y={6.3} width={11.4} height={11.4} rx={3.4} fill="none" stroke="#fff" strokeWidth={1.4} />
+          <circle cx={12} cy={12} r={3.4} fill="none" stroke="#fff" strokeWidth={1.4} />
+          <circle cx={16.1} cy={7.9} r={0.9} fill="#fff" />
+        </svg>
+      </a>
+      <a
+        href={youtube}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="YouTube"
+        className="gs-hover-lift"
+        style={{ display: 'inline-flex', width: 22, height: 22, transition: 'transform .25s ease' }}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden style={{ width: '100%', height: '100%' }}>
+          <path
+            d="M22.5 7.2c-.25-1.1-1.13-1.96-2.24-2.21C18.3 4.5 12 4.5 12 4.5s-6.3 0-8.26.49C2.63 5.24 1.75 6.1 1.5 7.2 1 9.14 1 12 1 12s0 2.86.5 4.8c.25 1.1 1.13 1.96 2.24 2.21C5.7 19.5 12 19.5 12 19.5s6.3 0 8.26-.49c1.11-.25 1.99-1.11 2.24-2.21.5-1.94.5-4.8.5-4.8s0-2.86-.5-4.8z"
+            fill="#ff0000"
+          />
+          <path d="M9.8 15.3V8.7l5.8 3.3-5.8 3.3z" fill="#fff" />
+        </svg>
+      </a>
+      {spotify && (
+        <a
+          href={spotify}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Spotify"
+          className="gs-hover-lift"
+          style={{ display: 'inline-flex', width: 22, height: 22, transition: 'transform .25s ease' }}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden style={{ width: '100%', height: '100%' }}>
+            <circle cx={12} cy={12} r={10.5} fill="#1db954" />
+            <path d="M6.6 9.8c3.4-1 7.6-.8 10.4.9" fill="none" stroke="#000" strokeWidth={1.4} strokeLinecap="round" />
+            <path d="M7 12.9c2.8-.8 6.3-.6 8.6.8" fill="none" stroke="#000" strokeWidth={1.3} strokeLinecap="round" />
+            <path d="M7.4 15.9c2.3-.6 5-.5 6.9.7" fill="none" stroke="#000" strokeWidth={1.1} strokeLinecap="round" />
+          </svg>
+        </a>
+      )}
+      {appleMusic && (
+        <a
+          href={appleMusic}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Apple Music"
+          className="gs-hover-lift"
+          style={{ display: 'inline-flex', width: 22, height: 22, transition: 'transform .25s ease' }}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden style={{ width: '100%', height: '100%' }}>
+            <defs>
+              <linearGradient id={amGradientId} x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#fa6e72" />
+                <stop offset="100%" stopColor="#fa233b" />
+              </linearGradient>
+            </defs>
+            <rect x={1.5} y={1.5} width={21} height={21} rx={6} fill={`url(#${amGradientId})`} />
+            <path
+              d="M15.8 6.6v7.2a2.3 2.3 0 1 1-1.3-2.07V9.1l-4.4.9v4.5a2.3 2.3 0 1 1-1.3-2.07V8.3c0-.33.23-.6.55-.67l5.3-1.1c.42-.09.85.23.85.66z"
+              fill="#fff"
+            />
+          </svg>
+        </a>
+      )}
+    </div>
   );
 }
 
@@ -168,6 +277,13 @@ export function PeoplePage() {
                 </span>
                 <span style={roleStyle}>FOUNDER / CREATIVE LEAD</span>
                 <span style={skillsStyle}>LYRICIST · WRITER · DIRECTOR</span>
+                <SocialIcons
+                  id="prashant"
+                  instagram="https://instagram.com/prashantingole"
+                  youtube="https://youtube.com/@prashantingole"
+                  spotify="https://open.spotify.com/artist/prashantingole"
+                  appleMusic="https://music.apple.com/artist/prashant-ingole"
+                />
               </div>
               <ExpandableBio paragraphs={PRASHANT_BIO} />
             </div>
@@ -209,6 +325,11 @@ export function PeoplePage() {
                 </span>
                 <span style={roleStyle}>DIRECTOR / SHOWRUNNER</span>
                 <span style={skillsStyle}>DIRECTOR · SHOWRUNNER · CREATIVE PRODUCER · POST PRODUCER</span>
+                <SocialIcons
+                  id="abhijeet"
+                  instagram="https://instagram.com/abhijeetnag"
+                  youtube="https://youtube.com/@abhijeetnag"
+                />
               </div>
               <ExpandableBio paragraphs={ABHIJEET_BIO} />
             </div>
