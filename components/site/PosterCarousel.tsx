@@ -1,11 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { FRAMES } from '@/content/frames';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 
-type CarouselItem = { title: string; status: string; href: string; ph?: string };
+type CarouselItem = { title: string; status: string; ph?: string };
 
 type Props = {
   items: CarouselItem[];
@@ -26,7 +25,7 @@ const CARD_W = 'clamp(132px,20vw,240px)';
 export function PosterCarousel({ items, radius = 560, autoRotate = 0.035 }: Props) {
   const stageRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -42,7 +41,6 @@ export function PosterCarousel({ items, radius = 560, autoRotate = 0.035 }: Prop
     let dragging = false;
     let moved = 0;
     let px = 0;
-    let suppressClick = 0;
     let retryTimer: ReturnType<typeof setTimeout> | undefined;
 
     function layout() {
@@ -142,8 +140,6 @@ export function PosterCarousel({ items, radius = 560, autoRotate = 0.035 }: Prop
         if (!dragging) return;
         dragging = false;
         stage.style.cursor = 'grab';
-        // A click that never travelled should still follow the poster's link.
-        if (moved > 6) suppressClick = Date.now();
       };
 
       stage.addEventListener('mousedown', down);
@@ -152,14 +148,6 @@ export function PosterCarousel({ items, radius = 560, autoRotate = 0.035 }: Prop
       stage.addEventListener('touchstart', down, { passive: true });
       stage.addEventListener('touchmove', move, { passive: false });
       window.addEventListener('touchend', up);
-
-      const onClickCapture = (e: MouseEvent) => {
-        if (suppressClick && Date.now() - suppressClick < 250) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      };
-      stage.addEventListener('click', onClickCapture, true);
 
       // Horizontal wheel / trackpad swipe turns it; vertical is left to the page.
       const onWheel = (e: WheelEvent) => {
@@ -187,7 +175,6 @@ export function PosterCarousel({ items, radius = 560, autoRotate = 0.035 }: Prop
         stage.removeEventListener('touchstart', down);
         stage.removeEventListener('touchmove', move);
         window.removeEventListener('touchend', up);
-        stage.removeEventListener('click', onClickCapture, true);
         stage.removeEventListener('wheel', onWheel);
         stage.removeEventListener('keydown', onKeyDown);
       };
@@ -238,13 +225,11 @@ export function PosterCarousel({ items, radius = 560, autoRotate = 0.035 }: Prop
     >
       <div ref={ringRef} style={{ position: 'relative', width: '100%', height: '100%', transformStyle: 'preserve-3d', willChange: 'transform' }}>
         {items.map((c, i) => (
-          <Link
+          <div
             key={c.title}
             ref={(el) => {
               cardRefs.current[i] = el;
             }}
-            href={c.href}
-            aria-label={c.title}
             style={{
               position: 'absolute',
               left: '50%',
@@ -295,7 +280,7 @@ export function PosterCarousel({ items, radius = 560, autoRotate = 0.035 }: Prop
                 <span style={{ fontSize: 9, letterSpacing: '.26em', color: '#d4a05a' }}>{c.status}</span>
               </div>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </div>

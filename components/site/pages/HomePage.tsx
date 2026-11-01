@@ -1,35 +1,27 @@
 'use client';
 
 import Link from 'next/link';
-import { FRAMES } from '@/content/frames';
-import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 import { LogoRibbon } from '@/components/ui/logo-ribbon';
+import { stillFor } from '@/content/media';
 import { SLATE_PROJECTS } from '../data/slateProjects';
 import { HeroPreloader } from '../HeroPreloader';
+import { NetflixCarousel } from '../NetflixCarousel';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
-import { VideoFrame } from '../VideoFrame';
+import { ScrollLockedDeck } from '../ScrollLockedDeck';
 
-const ENGINE = [
-  { n: '01', title: 'STORY', items: ['Development', 'Writing', 'Concepts', 'Adaptations'] },
-  { n: '02', title: 'PRODUCTION', items: ['Film', 'Series', 'Music', 'Commercials'] },
-  { n: '03', title: 'WORLD BUILDING', items: ['Animation', 'VFX', 'Virtual Production', 'AI'] },
-  { n: '04', title: 'DISTRIBUTION', items: ['Theatrical', 'OTT', 'Music', 'Digital', 'International'] },
-];
+const SHOWREEL_SLIDES = SLATE_PROJECTS.map((p) => ({
+  title: p.title,
+  meta: p.format.toUpperCase(),
+  placeholder: `${p.title} — showreel still`,
+}));
 
-const IP_CHAIN = ['IDEA', 'WORLD', 'CHARACTERS', 'CONTENT', 'AUDIENCE', 'DISTRIBUTION', 'IP', 'NEW STORIES'];
-
-const CREDITS = [
-  { title: 'MALHARI', film: 'BAJIRAO MASTANI', year: '2015' },
-  { title: 'GAJANANA', film: 'BAJIRAO MASTANI', year: '2015' },
-  { title: 'ZIDDI DIL', film: 'MARY KOM', year: '2014' },
-  { title: 'PARTY ON MY MIND', film: 'RACE 2', year: '2013' },
-  { title: 'PAL', film: 'JALEBI', year: '2018' },
-  { title: 'UDHAL HO', film: 'MALAAL', year: '2019' },
-  { title: 'UTTH JA ZIDDI RE', film: '83', year: '2021' },
-];
-
-const PATHS = ['THEATRICAL', 'OTT', 'MUSIC', 'DIGITAL', 'BRAND', 'LICENSING', 'GLOBAL'];
+const DECK_SLIDES = SLATE_PROJECTS.map((p) => ({
+  image: stillFor(`${p.title} — key art`, 'poster'),
+  title: p.title,
+  caption: `${p.format} — ${p.status}`,
+  alt: `${p.title} — key art`,
+}));
 
 const MARKET = [
   { figure: '₹2.78T', label: "India's media and entertainment sector in 2025, up 9% year on year" },
@@ -69,94 +61,25 @@ export function HomePage() {
     <>
       <HeroPreloader />
       <PageShell>
-        {/* 01 ENTRY */}
-        <section
-          style={{
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 'clamp(26px,5vh,58px)',
-            padding: 'clamp(100px,14vh,150px) clamp(20px,5vw,80px) clamp(70px,10vh,110px)',
-            textAlign: 'center',
-          }}
-        >
-          <Reveal
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(20px,3.8vh,40px)' }}
-          >
-            <h1
-              style={{
-                margin: 0,
-                fontFamily: "'Oswald',sans-serif",
-                fontWeight: 200,
-                fontSize: 'clamp(34px,8vw,132px)',
-                lineHeight: 0.98,
-                letterSpacing: '.18em',
-                textIndent: '.18em',
-                color: '#ece6da',
-              }}
-            >
-              GOD&apos;S OWN
-              <br />
-              MOTION PICTURES
-            </h1>
-            <div style={{ fontSize: 'clamp(9px,.82vw,12px)', letterSpacing: '.44em', textIndent: '.44em', color: '#8f887c' }}>
-              STORIES WRITTEN. WORLDS CREATED.
-            </div>
-          </Reveal>
-          <Reveal delay={90} style={{ maxWidth: '56ch' }}>
-            <p style={{ margin: 0, fontSize: 'clamp(13px,1.15vw,17px)', lineHeight: 1.7, letterSpacing: '.02em', color: '#b3ab9d' }}>
-              An independent entertainment studio developing stories, content and original IP for audiences in India and
-              around the world.
-            </p>
-          </Reveal>
-          <Reveal delay={160} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 'clamp(12px,1.6vw,20px)' }}>
-            <Link
-              href="/slate"
-              className="gs-hover-outline"
-              style={{
-                padding: '15px clamp(20px,2.6vw,34px)',
-                fontSize: 10,
-                letterSpacing: '.3em',
-                color: '#ece6da',
-                boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.28)',
-              }}
-            >
-              VIEW THE SLATE
-            </Link>
-          </Reveal>
-          <Reveal delay={230} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 9, color: '#8f887c' }}>
-            <span style={{ fontSize: 8, letterSpacing: '.4em', textIndent: '.4em' }}>SCROLL</span>
-            <span
-              style={{
-                display: 'block',
-                width: 1,
-                height: 24,
-                background: '#8f887c',
-                animation: 'gs-breathe 2.6s ease-in-out infinite',
-              }}
-            />
-          </Reveal>
-        </section>
-  
         {/* SHOWREEL */}
         <section style={{ padding: 'clamp(20px,4vh,60px) clamp(20px,5vw,80px) clamp(50px,9vh,110px)' }}>
           <div style={{ maxWidth: 1320, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(20px,3.4vh,36px)' }}>
             <Reveal style={eyebrow}>SHOWREEL</Reveal>
             <Reveal delay={90}>
-              <VideoFrame
-                label="GOD'S OWN — SHOWREEL"
-                meta="FILM · SERIES · MUSIC · COMMERCIALS"
-                frame="cinematic"
-                mobileFrame="vertical"
-                placeholder="SHOWREEL — poster frame (a strong, high-contrast still)"
-                note="REEL COMING SOON"
-              />
+              <NetflixCarousel slides={SHOWREEL_SLIDES} frame="cinematic" />
             </Reveal>
           </div>
         </section>
-  
+
+        {/* BRAND WORK */}
+        <section style={{ padding: 'clamp(40px,6vh,80px) clamp(20px,5vw,80px) clamp(50px,9vh,110px)' }}>
+          <div style={{ maxWidth: 1180, margin: '0 auto' }}>
+            <Reveal>
+              <LogoRibbon />
+            </Reveal>
+          </div>
+        </section>
+
         {/* 02 WHAT IS GOD'S OWN */}
         <section id="about" style={{ padding: sectionPad }}>
           <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,66px)' }}>
@@ -172,170 +95,50 @@ export function HomePage() {
             </Reveal>
             <Reveal
               style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,270px),1fr))',
-                gap: 'clamp(20px,3vw,44px)',
-                alignItems: 'stretch',
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                gap: 'clamp(18px,2.6vw,32px)',
+                padding: 'clamp(26px,3.6vw,46px) 0',
+                borderTop: '1px solid rgba(236,230,218,.14)',
+                borderBottom: '1px solid rgba(236,230,218,.14)',
               }}
             >
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 14,
-                  padding: 'clamp(22px,3vw,36px)',
-                  boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.1)',
-                }}
-              >
-                <span style={{ fontSize: 9, letterSpacing: '.4em', color: '#8f887c' }}>TODAY</span>
-                <span
-                  style={{
-                    fontFamily: "'Oswald',sans-serif",
-                    fontWeight: 300,
-                    fontSize: 'clamp(19px,2.2vw,32px)',
-                    lineHeight: 1.25,
-                    letterSpacing: '.03em',
-                    color: '#ece6da',
-                  }}
-                >
-                  Production
-                  <br />
-                  Content
-                  <br />
-                  Talent
+              <div style={{ flex: '1 1 240px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <span style={{ fontSize: 10, letterSpacing: '.4em', textIndent: '.4em', color: '#8f887c' }}>TODAY</span>
+                <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(18px,2vw,27px)', letterSpacing: '.02em', color: '#ece6da' }}>
+                  Production · Content · Talent
                 </span>
               </div>
-              <div
+              <span
+                aria-hidden
+                className="gs-today-tomorrow-arrow"
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 14,
-                  padding: 'clamp(22px,3vw,36px)',
-                  boxShadow: 'inset 0 0 0 1px rgba(212,160,90,.3)',
+                  flex: '0 0 auto',
+                  fontSize: 'clamp(18px,2.2vw,30px)',
+                  color: '#d4a05a',
                 }}
               >
-                <span style={{ fontSize: 9, letterSpacing: '.4em', color: '#d4a05a' }}>TOMORROW</span>
-                <span
-                  style={{
-                    fontFamily: "'Oswald',sans-serif",
-                    fontWeight: 300,
-                    fontSize: 'clamp(19px,2.2vw,32px)',
-                    lineHeight: 1.25,
-                    letterSpacing: '.03em',
-                    color: '#ece6da',
-                  }}
-                >
-                  Original IP
-                  <br />
-                  Franchises
-                  <br />
-                  Global audiences
+                →
+              </span>
+              <div style={{ flex: '1 1 240px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <span style={{ fontSize: 10, letterSpacing: '.4em', textIndent: '.4em', color: '#d4a05a' }}>TOMORROW</span>
+                <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(18px,2vw,27px)', letterSpacing: '.02em', color: '#ece6da' }}>
+                  Original IP · Franchises · Global audiences
                 </span>
               </div>
             </Reveal>
           </div>
         </section>
   
-        {/* 03 THE STUDIO ENGINE */}
-        <section id="studio" style={{ padding: sectionPad }}>
-          <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,60px)' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <div style={eyebrow}>03 — THE STUDIO</div>
-              <h2 style={h2Style}>THE STUDIO ENGINE</h2>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,225px),1fr))', gap: 'clamp(14px,2vw,26px)' }}>
-              {ENGINE.map((e, i) => (
-                <Reveal
-                  key={e.n}
-                  delay={i * 70}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 'clamp(16px,2.6vh,26px)',
-                    padding: 'clamp(22px,3vw,38px)',
-                    background: '#000',
-                    boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.1)',
-                  }}
-                >
-                  <span style={{ fontFamily: 'ui-monospace,Menlo,monospace', fontSize: 10, letterSpacing: '.2em', color: '#8f887c' }}>
-                    {e.n}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: "'Oswald',sans-serif",
-                      fontWeight: 300,
-                      fontSize: 'clamp(18px,2vw,28px)',
-                      lineHeight: 1.15,
-                      letterSpacing: '.06em',
-                      color: '#ece6da',
-                    }}
-                  >
-                    {e.title}
-                  </span>
-                  <span style={{ fontSize: 'clamp(12px,1vw,14px)', lineHeight: 2, letterSpacing: '.04em', color: '#b3ab9d', whiteSpace: 'pre-line' }}>
-                    {e.items.join('\n')}
-                  </span>
-                </Reveal>
-              ))}
-            </div>
-            <Reveal
-              style={{
-                maxWidth: '52ch',
-                fontFamily: "'Oswald',sans-serif",
-                fontWeight: 200,
-                fontSize: 'clamp(15px,1.7vw,26px)',
-                lineHeight: 1.5,
-                letterSpacing: '.04em',
-                color: '#ece6da',
-              }}
-            >
-              These are not disconnected services. They are components of one entertainment engine.
-            </Reveal>
-          </div>
-        </section>
-  
-        {/* 04 THE IP ENGINE */}
-        <section id="ip" style={{ padding: sectionPad }}>
-          <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,62px)' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <div style={eyebrow}>04 — THE IP ENGINE</div>
-              <h2 style={h2Style}>FROM STORY TO IP</h2>
-            </div>
-            <Reveal style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 'clamp(8px,1.2vw,16px)' }}>
-              {IP_CHAIN.map((label, i) => (
-                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px,1.2vw,16px)' }}>
-                  <span
-                    style={{
-                      fontFamily: "'Oswald',sans-serif",
-                      fontWeight: 300,
-                      fontSize: 'clamp(14px,1.9vw,28px)',
-                      letterSpacing: '.1em',
-                      color: label === 'IP' ? '#d4a05a' : '#ece6da',
-                    }}
-                  >
-                    {label}
-                  </span>
-                  {i < IP_CHAIN.length - 1 && <span style={{ fontSize: 'clamp(11px,1.2vw,16px)', color: '#8f887c' }}>→</span>}
-                </div>
-              ))}
-            </Reveal>
-            <Reveal style={{ maxWidth: '62ch' }}>
-              <p style={bodyStyle}>
-                We look beyond a single release. Our long-term ambition is to develop stories, characters and worlds
-                that can evolve across formats, platforms and audiences.
-              </p>
-            </Reveal>
-          </div>
-        </section>
-  
-        {/* 05 THE SLATE */}
-        <section id="slate" style={{ padding: sectionPad }}>
-          <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(30px,5vh,56px)' }}>
+        {/* 03 THE SLATE */}
+        <section id="slate">
+          <div style={{ maxWidth: 1180, margin: '0 auto', padding: sectionPad, paddingBottom: 0 }}>
             <Reveal
               style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 24 }}
             >
               <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-                <div style={eyebrow}>05 — THE SLATE</div>
+                <div style={eyebrow}>03 — THE SLATE</div>
                 <h2 style={h2Style}>STORIES IN MOTION</h2>
               </div>
               <Link
@@ -346,48 +149,15 @@ export function HomePage() {
                 VIEW FULL SLATE →
               </Link>
             </Reveal>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,290px),1fr))', gap: 'clamp(18px,2.4vw,32px)' }}>
-              {SLATE_PROJECTS.map((p, i) => (
-                <Reveal key={p.slug} delay={i * 70}>
-                  <Link
-                    href={`/slate/${p.slug}`}
-                    className="gs-hover-card"
-                    style={{ display: 'flex', flexDirection: 'column', background: '#0a0a0a', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.09)', color: '#ece6da', textDecoration: 'none' }}
-                  >
-                    <div style={{ position: 'relative', aspectRatio: FRAMES.editorial.css, overflow: 'hidden' }}>
-                      <ImageSlot alt={`${p.title} — key art`} placeholder={`${p.title} — key art`} shape="rect" frame="editorial" sizes="(max-width: 760px) 92vw, (max-width: 1240px) 33vw, 380px" />
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 'clamp(20px,2.4vw,30px)' }}>
-                      <span
-                        style={{
-                          fontFamily: "'Oswald',sans-serif",
-                          fontWeight: 300,
-                          fontSize: 'clamp(22px,2.6vw,40px)',
-                          lineHeight: 1,
-                          letterSpacing: '.06em',
-                          color: '#ece6da',
-                        }}
-                      >
-                        {p.title}
-                      </span>
-                      <span style={{ fontSize: 'clamp(11px,.9vw,13px)', letterSpacing: '.06em', color: '#b3ab9d' }}>{p.format}</span>
-                      <span style={{ fontSize: 9, letterSpacing: '.3em', color: '#d4a05a', marginTop: 6 }}>{p.status}</span>
-                    </div>
-                  </Link>
-                </Reveal>
-              ))}
-            </div>
-            <p style={{ margin: 0, fontFamily: 'ui-monospace,Menlo,monospace', fontSize: 10, letterSpacing: '.16em', color: '#8f887c' }}>
-              PLACEHOLDER TITLES — SLATE TO BE CONFIRMED
-            </p>
           </div>
+          <ScrollLockedDeck slides={DECK_SLIDES} background="transparent" ink="#ece6da" aspect="2 / 3" cardWidth="min(86vw, 560px)" />
         </section>
-  
-        {/* 06 THE AUDIENCE */}
+
+        {/* 04 THE AUDIENCE */}
         <section id="audience" style={{ padding: sectionPad }}>
           <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,62px)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <div style={eyebrow}>06 — THE AUDIENCE</div>
+              <div style={eyebrow}>04 — THE AUDIENCE</div>
               <h2 style={h2Style}>STORIES WITHOUT BORDERS</h2>
             </div>
             <Reveal
@@ -444,103 +214,11 @@ export function HomePage() {
           </div>
         </section>
   
-        {/* 07 PROOF */}
-        <section id="work" style={{ padding: sectionPad }}>
-          <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,60px)' }}>
-            <Reveal style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <div style={eyebrow}>07 — PROOF</div>
-              <h2 style={h2Style}>BUILT ON EXPERIENCE.</h2>
-              <p style={{ ...bodyStyle, maxWidth: '56ch' }}>
-                Selected credits written by the studio&apos;s founding creative lead across Hindi film and music.
-              </p>
-              <Link
-                href="/work"
-                className="gs-hover-accent"
-                style={{ alignSelf: 'flex-start', marginTop: 6, fontSize: 10, letterSpacing: '.3em', color: '#8f887c', borderBottom: '1px solid rgba(143,136,124,.4)', paddingBottom: 5 }}
-              >
-                ALL SELECTED WORK →
-              </Link>
-            </Reveal>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {CREDITS.map((c) => (
-                <div
-                  key={c.title}
-                  style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    alignItems: 'baseline',
-                    justifyContent: 'space-between',
-                    gap: 'clamp(12px,3vw,40px)',
-                    padding: 'clamp(16px,2.4vh,26px) 0',
-                    borderTop: '1px solid rgba(236,230,218,.1)',
-                  }}
-                >
-                  <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(19px,2.6vw,40px)', lineHeight: 1.05, letterSpacing: '.04em', color: '#ece6da' }}>
-                    {c.title}
-                  </span>
-                  <span style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(12px,2.4vw,32px)', fontSize: 'clamp(10px,.8vw,12px)', letterSpacing: '.28em', color: '#8f887c' }}>
-                    <span>{c.film}</span>
-                    <span>{c.year}</span>
-                  </span>
-                </div>
-              ))}
-            </div>
-            {/* The brand marks belong to this section rather than a numbered one
-                of their own: film credits and client work are the same claim,
-                and the ribbon's own eyebrow already sets it apart as a band. */}
-            <Reveal>
-              <LogoRibbon />
-            </Reveal>
-          </div>
-        </section>
-  
-        {/* 08 COMMERCIAL ECOSYSTEM */}
+        {/* 05 WHY NOW */}
         <section style={{ padding: sectionPad }}>
           <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,60px)' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <div style={eyebrow}>08 — THE MODEL</div>
-              <h2 style={h2Style}>ONE STORY. MANY PATHS.</h2>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2.4vh,26px)' }}>
-              <span style={{ fontFamily: "'Oswald',sans-serif", fontWeight: 300, fontSize: 'clamp(20px,2.6vw,38px)', letterSpacing: '.1em', color: '#ece6da' }}>
-                STORY
-              </span>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,150px),1fr))', gap: 'clamp(10px,1.4vw,18px)' }}>
-                {PATHS.map((label, i) => (
-                  <Reveal
-                    key={label}
-                    delay={Math.min(i, 5) * 70}
-                    style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: 'clamp(16px,2.2vw,26px)', background: '#000', boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.1)' }}
-                  >
-                    <span style={{ fontFamily: 'ui-monospace,Menlo,monospace', fontSize: 9, letterSpacing: '.2em', color: '#8f887c' }}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <span style={{ fontSize: 'clamp(11px,.95vw,14px)', letterSpacing: '.22em', color: '#ece6da' }}>{label}</span>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-            <Reveal
-              style={{
-                maxWidth: '48ch',
-                fontFamily: "'Oswald',sans-serif",
-                fontWeight: 200,
-                fontSize: 'clamp(15px,1.7vw,26px)',
-                lineHeight: 1.5,
-                letterSpacing: '.04em',
-                color: '#ece6da',
-              }}
-            >
-              One successful property does not equal one revenue event.
-            </Reveal>
-          </div>
-        </section>
-  
-        {/* 09 WHY NOW */}
-        <section style={{ padding: sectionPad }}>
-          <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,60px)' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <div style={eyebrow}>09 — CONTEXT</div>
+              <div style={eyebrow}>05 — CONTEXT</div>
               <h2 style={h2Style}>WHY NOW</h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,210px),1fr))', gap: 'clamp(20px,3vw,44px)' }}>
@@ -565,7 +243,7 @@ export function HomePage() {
           </div>
         </section>
   
-        {/* 10 FUTURE */}
+        {/* 06 FUTURE */}
         <section style={{ minHeight: '92vh', display: 'flex', alignItems: 'center', padding: sectionPad }}>
           <div style={{ maxWidth: 1180, margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(36px,6.5vh,70px)' }}>
             <Reveal style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(22px,4vh,38px)' }}>
@@ -600,7 +278,7 @@ export function HomePage() {
           </div>
         </section>
   
-        {/* 11 FINAL CTA */}
+        {/* 07 FINAL CTA */}
         <section id="contact" style={{ padding: 'clamp(70px,13vh,150px) clamp(20px,5vw,80px) clamp(50px,8vh,90px)' }}>
           <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(34px,6vh,62px)' }}>
             <Reveal
@@ -614,11 +292,7 @@ export function HomePage() {
                 <Reveal
                   key={d.title}
                   as="a"
-                  href={
-                    d.cta.startsWith('START A CONVERSATION')
-                      ? `/contact?subject=${encodeURIComponent(d.subject)}`
-                      : `mailto:hello@godsownmotionpictures.com?subject=${encodeURIComponent(d.subject)}`
-                  }
+                  href={`/contact?subject=${encodeURIComponent(d.subject)}`}
                   delay={i * 70}
                   className="gs-hover-void"
                   style={{
