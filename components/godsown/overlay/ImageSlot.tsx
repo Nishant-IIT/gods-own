@@ -48,6 +48,14 @@ type Props = {
   style?: CSSProperties;
   /** Opt out of the temporary ImageKit fallback and show the bare frame instead. */
   noFallback?: boolean;
+  /**
+   * Skip next/image's default lazy loading. For a slot that sits off-screen
+   * right now but is about to be swapped into view by script rather than by
+   * scrolling — a carousel's next/previous slide — lazy loading never gets the
+   * intersection signal it waits for, so the slide shows blank until the click
+   * that reveals it kicks off the fetch.
+   */
+  eager?: boolean;
 };
 
 /** A path we hand to `next/image` untouched — local asset or an absolute URL. */
@@ -92,6 +100,7 @@ export function ImageSlot({
   className,
   style,
   noFallback,
+  eager,
 }: Props) {
   const radius = shape === 'rounded' ? 18 : 2;
   assertPaired(alt, src, mobileFrame, mobileSrc);
@@ -142,7 +151,14 @@ export function ImageSlot({
         className={className}
         style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', borderRadius: radius, ...style }}
       >
-        <Image src={resolved} alt={alt} fill sizes={sizes ?? FRAMES[frame].sizes} style={{ objectFit: 'cover' }} />
+        <Image
+          src={resolved}
+          alt={alt}
+          fill
+          sizes={sizes ?? FRAMES[frame].sizes}
+          style={{ objectFit: 'cover' }}
+          loading={eager ? 'eager' : undefined}
+        />
       </div>
     );
   }
