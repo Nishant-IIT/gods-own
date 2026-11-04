@@ -252,6 +252,7 @@ const CD_CSS = [
   ".cd-card[data-fly='1']{transition:transform .45s cubic-bezier(.3,.5,.3,1),opacity .45s ease}",
   ".cd-card[data-snap='1']{transition:none}",
   ".cd-card img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;display:block;pointer-events:none;user-select:none}",
+  ".cd-size-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:1px dashed rgba(236,230,218,.25);background:#0a0a0a repeating-linear-gradient(135deg,rgba(236,230,218,.05) 0 10px,rgba(236,230,218,.015) 10px 20px);font:10px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#8f887c}",
   ".cd-poster{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;gap:6px;padding:clamp(12px,1.6vw,20px);background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.82));pointer-events:none}",
   ".cd-poster-title{font:300 clamp(14px,1.6vw,22px)/1.15 'Oswald',sans-serif;letter-spacing:.05em;color:var(--cd-ink)}",
   ".cd-poster-sub{font-size:10px;letter-spacing:.22em;color:var(--cd-muted)}",
@@ -260,6 +261,13 @@ const CD_CSS = [
 ].join("\n")
 
 type Override = { i: number; x: number; y: number; r: number; mode: "drag" | "fly" | "snap" }
+
+/**
+ * TEMPORARY: matches the same flag in ImageSlot — shows each card's aspect
+ * ratio instead of its image, site-wide. Flip back to `false` (or delete
+ * this and the block that reads it below) to go back to real images.
+ */
+const SHOW_FRAME_SIZE_PLACEHOLDER = true
 
 export default function CardDeckCarousel({
   slides = DEFAULT_SLIDES,
@@ -468,7 +476,13 @@ export default function CardDeckCarousel({
               onPointerUp={isTop ? onUp : undefined}
               onPointerCancel={isTop ? onUp : undefined}
             >
-              {srcs[i] ? <img src={srcs[i]} alt={isTop ? sl.alt || sl.title || "" : ""} draggable={false} /> : null}
+              {SHOW_FRAME_SIZE_PLACEHOLDER ? (
+                <div className="cd-size-placeholder" aria-hidden="true">
+                  <span>{aspect.replace(/\s*\/\s*/, ":")}</span>
+                </div>
+              ) : srcs[i] ? (
+                <img src={srcs[i]} alt={isTop ? sl.alt || sl.title || "" : ""} draggable={false} />
+              ) : null}
               {(sl.title || sl.caption) && (
                 <div className="cd-poster" aria-hidden="true">
                   {sl.title ? <span className="cd-poster-title">{sl.title}</span> : null}

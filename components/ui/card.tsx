@@ -6,10 +6,20 @@ import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 const INK = '#ece6da';
 const MUTED = '#b3ab9d';
 
+/**
+ * TEMPORARY: matches the same flag in ImageSlot and CardDeckCarousel — shows
+ * the card's image size instead of the image itself, site-wide. Flip back to
+ * `false` (or delete this and the block that reads it below) to go back to
+ * real images.
+ */
+const SHOW_FRAME_SIZE_PLACEHOLDER = true;
+
 interface CardProps {
   title: string;
   description: string;
   imageUrl: string;
+  /** Shown instead of the image while `SHOW_FRAME_SIZE_PLACEHOLDER` is on, e.g. "16:9". */
+  placeholderRatio?: string;
   className?: string;
 }
 
@@ -18,7 +28,7 @@ interface CardProps {
  * caption — inline-styled (no utility classes) to match this hand-built
  * site, same approach as CometCard and LocationMap.
  */
-export function Card({ title, description, imageUrl, className }: CardProps) {
+export function Card({ title, description, imageUrl, placeholderRatio, className }: CardProps) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 150, damping: 20 });
@@ -61,12 +71,33 @@ export function Card({ title, description, imageUrl, className }: CardProps) {
           transformStyle: 'preserve-3d',
           borderRadius: 14,
           overflow: 'hidden',
-          backgroundImage: `url(${imageUrl})`,
+          background: SHOW_FRAME_SIZE_PLACEHOLDER
+            ? '#0a0a0a repeating-linear-gradient(135deg, rgba(236,230,218,.05) 0 10px, rgba(236,230,218,.015) 10px 20px)'
+            : undefined,
+          backgroundImage: SHOW_FRAME_SIZE_PLACEHOLDER ? undefined : `url(${imageUrl})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.1)',
         }}
       >
+        {SHOW_FRAME_SIZE_PLACEHOLDER && placeholderRatio && (
+          <span
+            aria-hidden
+            style={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 10,
+              letterSpacing: '.12em',
+              color: MUTED,
+              fontFamily: 'ui-monospace, Menlo, monospace',
+            }}
+          >
+            {placeholderRatio}
+          </span>
+        )}
         <div
           aria-hidden
           style={{

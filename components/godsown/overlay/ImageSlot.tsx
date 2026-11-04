@@ -64,6 +64,15 @@ function isLocalOrAbsolute(src: string) {
 }
 
 /**
+ * TEMPORARY: when true, every slot on the site shows its own frame name and
+ * pixel size instead of an image — real uploads, stock-still fallbacks, art
+ * directed pairs, all of it. Flip back to `false` (or delete this and the
+ * block that reads it below) to go back to normal rendering; nothing else
+ * in this file needs to change either way.
+ */
+const SHOW_FRAME_SIZE_PLACEHOLDER = true;
+
+/**
  * Half a pair is the one authoring slip this design can't catch at the type
  * level: the box still turns 9:16 on a phone (the call site said so), but the
  * only real image is the wide one, so `object-fit` would crop it blind — the
@@ -103,6 +112,46 @@ export function ImageSlot({
   eager,
 }: Props) {
   const radius = shape === 'rounded' ? 18 : 2;
+
+  if (SHOW_FRAME_SIZE_PLACEHOLDER) {
+    const ratio = (css: string) => css.replace(/\s*\/\s*/, ':');
+    const label = mobileFrame
+      ? `${frame.toUpperCase()} ${ratio(FRAMES[frame].css)}\nmobile ${ratio(FRAMES[mobileFrame].css)}`
+      : `${frame.toUpperCase()} ${ratio(FRAMES[frame].css)}`;
+    return (
+      <div
+        className={className}
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+          borderRadius: radius,
+          border: '1px dashed rgba(236,230,218,0.25)',
+          background: 'repeating-linear-gradient(135deg, rgba(236,230,218,0.05) 0 10px, rgba(236,230,218,0.015) 10px 20px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 10,
+          boxSizing: 'border-box',
+          textAlign: 'center',
+          ...style,
+        }}
+      >
+        <span
+          style={{
+            fontSize: 10,
+            letterSpacing: '.12em',
+            color: '#8f887c',
+            fontFamily: 'ui-monospace, Menlo, monospace',
+            whiteSpace: 'pre-line',
+          }}
+        >
+          {label}
+        </span>
+      </div>
+    );
+  }
+
   assertPaired(alt, src, mobileFrame, mobileSrc);
 
   // A real upload is delivered at its own frame's box; with nothing uploaded

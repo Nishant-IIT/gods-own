@@ -10,6 +10,17 @@ import { Reveal } from '../Reveal';
 const FILTERS = ['ALL', 'FILM', 'SERIES', 'MUSIC', 'DIGITAL', 'ORIGINAL IP'] as const;
 type Filter = (typeof FILTERS)[number];
 
+const CARD_IMAGE_W = 1600;
+const CARD_IMAGE_H = 900;
+
+function gcd(a: number, b: number): number {
+  return b === 0 ? a : gcd(b, a % b);
+}
+const CARD_RATIO = (() => {
+  const d = gcd(CARD_IMAGE_W, CARD_IMAGE_H);
+  return `${CARD_IMAGE_W / d}:${CARD_IMAGE_H / d}`;
+})();
+
 export function SlatePage() {
   const [filter, setFilter] = useState<Filter>('ALL');
   const shown = SLATE_PROJECTS.filter((p) => {
@@ -75,7 +86,12 @@ export function SlatePage() {
           <div style={{ display: 'grid', justifyContent: 'center', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,460px),560px))', gap: 'clamp(24px,4vw,48px)', perspective: 1000 }}>
             {shown.map((p) => (
               <Link key={p.slug} href={`/slate/${p.slug}`} style={{ display: 'block', textDecoration: 'none' }}>
-                <Card title={p.title} description={p.format} imageUrl={`https://picsum.photos/seed/${encodeURIComponent(p.slug)}/1600/900`} />
+                <Card
+                  title={p.title}
+                  description={p.format}
+                  imageUrl={`https://picsum.photos/seed/${encodeURIComponent(p.slug)}/${CARD_IMAGE_W}/${CARD_IMAGE_H}`}
+                  placeholderRatio={CARD_RATIO}
+                />
               </Link>
             ))}
           </div>
