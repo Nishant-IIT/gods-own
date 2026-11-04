@@ -5,6 +5,14 @@ import type { WorkProject } from '../data/workProjects';
 import { PageShell } from '../PageShell';
 import { Reveal } from '../Reveal';
 
+/**
+ * TEMPORARY: matches the same flag in ImageSlot, CardDeckCarousel and Card —
+ * shows the hero image's size instead of the image itself. Flip back to
+ * `false` (or delete this and the block that reads it below) to go back to
+ * real images.
+ */
+const SHOW_FRAME_SIZE_PLACEHOLDER = true;
+
 export function WorkDetailPage({ project }: { project: WorkProject }) {
   return (
     <PageShell>
@@ -29,12 +37,27 @@ export function WorkDetailPage({ project }: { project: WorkProject }) {
               aspectRatio: '16/9',
               borderRadius: 16,
               overflow: 'hidden',
-              backgroundImage: `url(${project.imageUrl})`,
+              background: SHOW_FRAME_SIZE_PLACEHOLDER
+                ? '#0a0a0a repeating-linear-gradient(135deg, rgba(236,230,218,.05) 0 10px, rgba(236,230,218,.015) 10px 20px)'
+                : undefined,
+              backgroundImage: SHOW_FRAME_SIZE_PLACEHOLDER ? undefined : `url(${project.imageUrl})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               boxShadow: 'inset 0 0 0 1px rgba(236,230,218,.1)',
+              display: SHOW_FRAME_SIZE_PLACEHOLDER ? 'flex' : undefined,
+              alignItems: SHOW_FRAME_SIZE_PLACEHOLDER ? 'center' : undefined,
+              justifyContent: SHOW_FRAME_SIZE_PLACEHOLDER ? 'center' : undefined,
             }}
-          />
+          >
+            {SHOW_FRAME_SIZE_PLACEHOLDER && (
+              <span
+                aria-hidden
+                style={{ fontSize: 11, letterSpacing: '.12em', color: '#8f887c', fontFamily: 'ui-monospace, Menlo, monospace' }}
+              >
+                16:9
+              </span>
+            )}
+          </div>
         </Reveal>
         <Reveal
           delay={90}

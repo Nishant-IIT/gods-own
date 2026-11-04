@@ -83,7 +83,7 @@ export function WorkPage() {
           >
             {shown.map((p) => (
               <Link key={p.slug} href={`/work/${p.slug}`} style={{ display: 'block', textDecoration: 'none' }}>
-                <Card title={p.title} description={p.description} imageUrl={p.imageUrl} />
+                <Card title={p.title} description={p.description} imageUrl={p.imageUrl} placeholderRatio="16:9" />
               </Link>
             ))}
           </Reveal>
