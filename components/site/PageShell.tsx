@@ -1,9 +1,16 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import type { ReactNode } from 'react';
 import { Footer } from './Footer';
 import { SiteNav } from './SiteNav';
-import { Universe } from './Universe';
+
+// `Universe` renders an R3F `<Canvas>` and sizes itself off `window` (via
+// `detectQuality`), so it can't be server-rendered. Isolating the no-SSR
+// boundary here — instead of disabling SSR for the whole page in
+// `pages/loaders.tsx` — lets everything else PageShell wraps (the page's
+// real content) server-render normally.
+const Universe = dynamic(() => import('./Universe').then((m) => m.Universe), { ssr: false });
 
 type Props = {
   children: ReactNode;
