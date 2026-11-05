@@ -7,15 +7,8 @@ import { CometCard } from '@/components/ui/comet-card';
 import { PageShell } from '../PageShell';
 import { PosterCarousel } from '../PosterCarousel';
 import { Reveal } from '../Reveal';
-
-const PRASHANT_WORK = [
-  { title: 'BAJIRAO MASTANI', status: 'FEATURE FILM' },
-  { title: 'MARY KOM', status: 'FEATURE FILM' },
-  { title: 'RACE 2', status: 'FEATURE FILM' },
-  { title: '83', status: 'FEATURE FILM' },
-  { title: 'JALEBI', status: 'FEATURE FILM' },
-  { title: 'BUDH (AWAKENING)', status: 'SHORT FILM' },
-];
+import { PRASHANT_WORK } from '../data/prashantWork';
+import { ABHIJEET_WORK } from '../data/abhijeetWork';
 
 const PRASHANT_BIO = [
   `Over the past decade, I've had the privilege of contributing to some incredible films such as Bajirao Mastani, Mary Kom, Race 2, 83, and Jalebi. Each project has been a journey where music and storytelling come together to create moments that audiences carry with them.`,
@@ -361,10 +354,10 @@ export function PeoplePage() {
               boxSizing: 'border-box',
             }}
           >
-            <span style={eyebrowMuted}>SELECTED WORK</span>
+            <span style={eyebrowMuted}>SELECTED WORK — ABHIJEET NAG</span>
             <span style={{ fontFamily: 'ui-monospace,Menlo,monospace', fontSize: 10, letterSpacing: '.16em', color: '#8f887c' }}>DRAG TO TURN</span>
           </div>
-          <PosterCarousel items={PRASHANT_WORK} />
+          <PosterCarousel items={ABHIJEET_WORK} />
         </Reveal>
       </section>
     </PageShell>
