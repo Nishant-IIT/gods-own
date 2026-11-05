@@ -1,3 +1,6 @@
+import { frameUrl } from '@/content/media';
+import { PRASHANT_WORK } from './prashantWork';
+
 export const WORK_CATEGORIES = [
   'TVC',
   'BRAND FILMS',
@@ -25,18 +28,17 @@ function slugify(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
-// Dummy placeholder data — swap for real gallery stills once confirmed.
-const FILMS = ['BAJIRAO MASTANI — 2015', 'MARY KOM — 2014', 'RACE 2 — 2013', '83 — 2021', 'JALEBI — 2018'];
-
-export const WORK_PROJECTS: WorkProject[] = FILMS.map((label, i) => {
-  const [title, year] = label.split(' — ');
+// Prashant's songs for Hindi cinema — the same list shown on his profile.
+// Songs without a real cover upload yet fall back to a placeholder still.
+export const WORK_PROJECTS: WorkProject[] = PRASHANT_WORK.map(({ title, status, src }) => {
+  const [film, year] = status.split(' · ');
   return {
     slug: slugify(title),
     title,
     year,
-    description: 'Soundtrack contribution.',
-    imageUrl: `https://picsum.photos/seed/${encodeURIComponent(title)}/1600/900`,
-    category: WORK_CATEGORIES[i % WORK_CATEGORIES.length],
+    description: film,
+    imageUrl: src ? frameUrl(src, 'cinematic') : `https://picsum.photos/seed/${encodeURIComponent(title)}/1600/900`,
+    category: 'MUSIC VIDEOS',
   };
 });
 

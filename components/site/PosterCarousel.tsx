@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { FRAMES } from '@/content/frames';
 import { ImageSlot } from '@/components/godsown/overlay/ImageSlot';
 
-type CarouselItem = { title: string; status: string; ph?: string };
+type CarouselItem = { title: string; status: string; ph?: string; src?: string };
 
 type Props = {
   items: CarouselItem[];
@@ -253,6 +253,7 @@ export function PosterCarousel({ items, radius = 560, autoRotate = 0.035 }: Prop
               }}
             >
               <ImageSlot
+                src={c.src}
                 alt={c.title}
                 placeholder={c.ph || `${c.title} — poster (2:3)`}
                 shape="rect"
