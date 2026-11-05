@@ -47,7 +47,7 @@ export function WorkPage() {
 
       <section style={{ padding: sectionPad }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(30px,5vh,52px)' }}>
-          <Reveal style={eyebrowMuted}>GALLERY</Reveal>
+          <Reveal as="h2" style={eyebrowMuted}>GALLERY</Reveal>
           <Reveal style={{ display: 'flex', flexWrap: 'wrap', gap: '4px clamp(4px,1vw,14px)', alignItems: 'center', paddingBottom: 'clamp(10px,2vh,18px)', borderBottom: '1px solid rgba(236,230,218,.1)' }}>
             {FILTERS.map((f) => (
               <button
